@@ -1,0 +1,17 @@
+package com.xworkz.bike_showroom.dto;
+
+import lombok.Data;
+
+@Data
+public class UserRegisterDto {
+
+    private Integer id;
+    private String name;
+    private Integer age;
+    private String dlNumber;
+    private String address;
+    private Long phoneNumber;
+    private String email;
+    private String showroom;
+    private String bikeModel;
+}
