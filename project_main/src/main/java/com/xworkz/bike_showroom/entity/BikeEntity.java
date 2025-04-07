@@ -8,12 +8,14 @@ import javax.persistence.*;
 @Entity
 @Data
 @NamedQuery(name = "bikecount",query = "SELECT COUNT(b.id) FROM BikeEntity b")
+@NamedQuery(name = "allbikedata",query = "SELECT u FROM BikeEntity u")
 public class BikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
     private String model;
     private String milage;
+    private String cc;
     private String bikename;
     private Long price;
     private String color;

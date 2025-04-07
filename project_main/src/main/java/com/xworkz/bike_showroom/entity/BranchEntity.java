@@ -8,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NamedQuery(name = "allbranchdata",query = "SELECT u FROM BranchEntity u")
 @NamedQuery(name = "branchcount",query = "SELECT COUNT(b.id) FROM BranchEntity b")
 public class BranchEntity {
     @Id

@@ -215,7 +215,7 @@
                             <h2 class="card-title">Register With Us</h2>
                         </div>
                         <div class="card-body p-4">
-                            <form id="registrationForm">
+                            <form id="registrationForm" action="register" method="post" >
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="name" class="form-label">Full Name</label>
@@ -295,7 +295,7 @@
                                 </div>
 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-register">SUBMIT REGISTRATION</button>
+                                    <input type="submit" class="btn btn-register" value="Register"/>
                                 </div>
                             </form>
                         </div>

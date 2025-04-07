@@ -39,7 +39,7 @@ public class EmailSender {
                     Message.RecipientType.TO,
                     InternetAddress.parse(email)
             );
-            message.setSubject("Testing Gmail with Attachment");
+            message.setSubject("ROYAL ENFIELD SHOWROOM");
 
             MimeBodyPart textBodyPart = new MimeBodyPart();
             textBodyPart.setContent("Your TEMPORARY password to login is\n" + password1+"\n"+

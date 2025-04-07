@@ -1,7 +1,9 @@
 package com.xworkz.bike_showroom.repository;
 
+import com.xworkz.bike_showroom.entity.BikeEntity;
 import com.xworkz.bike_showroom.entity.BranchEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class OwnerRepoImpl implements OwnerRepo {
@@ -44,6 +47,7 @@ public class OwnerRepoImpl implements OwnerRepo {
             query.setParameter("password",password);
             query.setParameter("email",email);
             int result1=query.executeUpdate();
+            entityManager.getTransaction().commit();
             System.out.println("======"+result1);
             if (result1==1){
                 return true;
@@ -77,13 +81,32 @@ public class OwnerRepoImpl implements OwnerRepo {
     }
 
     @Override
+    public boolean addBike(BikeEntity bikeEntity) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(bikeEntity);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
     public int bikecount() {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
             Query query=entityManager.createNamedQuery("bikecount");
-            int count=query.executeUpdate();
-            return count;
+            Long count= (Long) query.getSingleResult();
+            return Math.toIntExact(count);
         }catch (Exception e){
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();
@@ -101,8 +124,8 @@ public class OwnerRepoImpl implements OwnerRepo {
         try {
             entityManager.getTransaction().begin();
             Query query=entityManager.createNamedQuery("branchcount");
-            int count=query.executeUpdate();
-            return count;
+            Long count= (Long) query.getSingleResult();
+            return Math.toIntExact(count);
         }catch (Exception e){
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();
@@ -120,12 +143,69 @@ public class OwnerRepoImpl implements OwnerRepo {
         try {
             entityManager.getTransaction().begin();
             Query query=entityManager.createNamedQuery("usercount");
-            int count=query.executeUpdate();
-            return count;
+            Long count= (Long) query.getSingleResult();
+            return Math.toIntExact(count);
         }catch (Exception e){
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();
             return -1;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public List<BranchEntity> allbranchdata() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("allbranchdata");
+            List<BranchEntity> list= query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public List<BikeEntity> allbikedata() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("allbikedata");
+            List<BikeEntity> list=query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean register(UserReristerEntity userReristerEntity) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(userReristerEntity);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
         }finally {
             if (entityManager!=null){
                 entityManager.close();

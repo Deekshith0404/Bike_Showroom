@@ -10,7 +10,9 @@ public class BikeDto {
     private String model;
     private String milage;
     private String bikename;
+    private String cc;
     private Long price;
+    private String color;
     private MultipartFile front;
     private String frontview;
     private MultipartFile back;
