@@ -323,7 +323,7 @@
                         <a class="nav-link" href="#">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="userRegister.jsp">Register</a>
+                        <a class="nav-link" href="">location</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="ownerLogin.jsp">Admin</a>

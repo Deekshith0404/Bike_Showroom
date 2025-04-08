@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Data
 @NamedQuery(name = "bikecount",query = "SELECT COUNT(b.id) FROM BikeEntity b")
 @NamedQuery(name = "allbikedata",query = "SELECT u FROM BikeEntity u")
+@NamedQuery(name = "addbranch",query = "UPDATE BikeEntity b SET b.branchEntity.id = :branchId WHERE b.id = :bikeId")
+@NamedQuery(name = "notselectedbike",query = "select u from BikeEntity u where u.branchEntity.id IS NULL")
 public class BikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

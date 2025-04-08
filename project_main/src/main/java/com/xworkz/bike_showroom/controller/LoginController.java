@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -56,7 +57,8 @@ public class LoginController {
         model.addAttribute("user",ownerLogin.usercount());
         model.addAttribute("branchesList",ownerLogin.allbranchdata());
         model.addAttribute("justbike",ownerLogin.allbikedata());
-
+        model.addAttribute("unSelBike",ownerLogin.unselectedBike());
+        model.addAttribute("notfullbranch",ownerLogin.notFullBranch());
         return "dashboard.jsp";
     }
 
@@ -113,4 +115,18 @@ public class LoginController {
         }
         return "userRegister.jsp";
     }
+    @RequestMapping("/addbiketoshowroom")
+    public String addbiketobranch(@RequestParam("branch")String branchId,@RequestParam("bike")String bikeId,Model model){
+       int  branchid= Integer.parseInt(branchId);
+       int bikeid= Integer.parseInt(bikeId);
+        Boolean result=ownerLogin.addbiketobranch(branchid,bikeid);
+        if (result){
+            model.addAttribute("branchresult","Bike added to branch");
+        }else {
+            model.addAttribute("branchresult","bike cannot be added");
+        }
+        return "dashboard";
+    }
+
+
 }

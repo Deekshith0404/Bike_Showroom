@@ -20,4 +20,8 @@ public interface OwnerService {
     List<BranchEntity> allbranchdata();
     List<BikeEntity> allbikedata();
     boolean register(UserRegisterDto userRegisterDto);
+    boolean addbiketobranch(int branchid,int bikeid);
+    List<BikeEntity> unselectedBike();
+    List<BikeEntity> notFullBranch();
+
 }

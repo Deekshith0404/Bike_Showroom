@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -74,5 +75,20 @@ public class OwnerServiceImpl implements OwnerService {
         UserReristerEntity userReristerEntity=new UserReristerEntity();
         BeanUtils.copyProperties(userRegisterDto,userReristerEntity);
         return ownerRepo.register(userReristerEntity);
+    }
+
+    @Override
+    public boolean addbiketobranch(int branchid, int bikeid) {
+        return ownerRepo.addbiketobranch(branchid,bikeid);
+    }
+
+    @Override
+    public List<BikeEntity> unselectedBike() {
+        return ownerRepo.unselectedBike();
+    }
+
+    @Override
+    public List<BikeEntity> notFullBranch() {
+        return ownerRepo.notFullBranch();
     }
 }

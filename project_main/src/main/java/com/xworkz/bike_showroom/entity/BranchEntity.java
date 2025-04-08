@@ -10,6 +10,10 @@ import java.util.List;
 @Data
 @NamedQuery(name = "allbranchdata",query = "SELECT u FROM BranchEntity u")
 @NamedQuery(name = "branchcount",query = "SELECT COUNT(b.id) FROM BranchEntity b")
+@NamedQuery(
+        name = "showroomsWithFewBikes",
+        query = "SELECT b FROM BranchEntity b WHERE (SELECT COUNT(bk.id) FROM BikeEntity bk WHERE bk.branchEntity.id = b.id) < 5"
+)
 public class BranchEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

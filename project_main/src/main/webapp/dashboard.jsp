@@ -197,6 +197,9 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
+        .reslt{
+        color:green;
+        }
     </style>
 </head>
 <body>
@@ -214,19 +217,19 @@
                         <a class="nav-link active" href="dashboard.jsp">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="bikes.jsp">Bikes</a>
+                        <a class="nav-link" href="">Bikes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="brands.jsp">Brands</a>
+                        <a class="nav-link" href="userRegister.jsp">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="branches.jsp">Branches</a>
+                        <a class="nav-link" href="">Branches</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="users.jsp">Users</a>
+                        <a class="nav-link" href="">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a class="nav-link" href="index.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                 </ul>
             </div>
@@ -237,7 +240,10 @@
         <div class="container text-center">
             <h1>Admin Dashboard</h1>
             <p class="mb-0">Manage your Royal Enfield inventory and branches</p>
-                                ${branchresult}
+            <div class="reslt">
+              ${branchresult}
+              ${bikeresult}
+            </div>
         </div>
     </header>
 
@@ -297,21 +303,21 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                             <table class="table table-hover">
-                                <thead>
+                                <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
                                     <tr>
                                         <th>Model</th>
-                                        <th>Brand</th>
+                                        <th>Name</th>
                                         <th>CC</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${justbikes}" var="bike">
+                                    <c:forEach items="${justbike}" var="bike">
                                         <tr>
                                             <td>${bike.model}</td>
-                                            <td>${bike.brand}</td>
+                                            <td>${bike.bikename}</td>
                                             <td>${bike.cc}</span></td>
                                             <td>
                                                 <button class="btn btn-outline-gold btn-sm">Edit</button>
@@ -322,11 +328,9 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <!-- Branches Section -->
             <div class="col-md-6">
                 <div class="card">
@@ -337,9 +341,9 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
                             <table class="table table-hover">
-                                <thead>
+                                <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
                                     <tr>
                                         <th>Branch Name</th>
                                         <th>Location</th>
@@ -348,7 +352,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <c:forEach items="${branchesList}" var="branch">
                                         <tr>
                                             <td>${branch.name}</td>
@@ -363,12 +366,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="text-center mt-3">
-                            <a href="branches.jsp" class="btn btn-gold">View All Branches</a>
-                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -455,16 +456,16 @@
                                     <label for="showroomBranch" class="form-label">Select Branch</label>
                                     <select class="form-select" id="showroomBranch" name="branch" required>
                                         <option value="">-- Select Branch --</option>
-                                        <c:forEach items="${branchesList}" var="branch">
+                                        <c:forEach items="${notfullbranch}" var="branch">
                                             <option value="${branch.id}">${branch.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                        <label for="showroomBike" class="form-label">Select Branch</label>
+                                        <label for="showroomBike" class="form-label">Select Bike</label>
                                         <select class="form-select" id="showroomBike" name="bike" required>
                                                <option value="">-- Select Bike --</option>
-                                               <c:forEach items="${justbike}" var="bike">
+                                               <c:forEach items="${unSelBike}" var="bike">
                                                <option value="${bike.id}">${bike.bikename}</option>
                                                  </c:forEach>
                                        </select>
@@ -536,7 +537,7 @@
 
     <footer>
         <div class="container text-center">
-            <p class="copyright mb-0">© 2025 Royal Enfield. All Rights Reserved. | Made with <i class="fas fa-heart" style="color: var(--gold);"></i> for Motorcycle Enthusiasts</p>
+            <p class="copyright mb-0"> © 2025 Royal Enfield. All Rights Reserved. | Made with <i class="fas fa-heart" style="color: var(--gold);"></i> for Motorcycle Enthusiasts</p>
         </div>
     </footer>
 

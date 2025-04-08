@@ -18,4 +18,8 @@ public interface OwnerRepo {
     List<BranchEntity> allbranchdata();
     List<BikeEntity> allbikedata();
     boolean register(UserReristerEntity userReristerEntity);
+    boolean addbiketobranch(int branchid,int bikeid);
+    List<BikeEntity> unselectedBike();
+    List<BikeEntity> notFullBranch();
+
 }

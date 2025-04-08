@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -48,7 +49,6 @@ public class OwnerRepoImpl implements OwnerRepo {
             query.setParameter("email",email);
             int result1=query.executeUpdate();
             entityManager.getTransaction().commit();
-            System.out.println("======"+result1);
             if (result1==1){
                 return true;
             }else {
@@ -206,6 +206,66 @@ public class OwnerRepoImpl implements OwnerRepo {
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();
             return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean addbiketobranch(int branchid, int bikeid) {
+        EntityManager entityManager=entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("addbranch");
+            query.setParameter("branchId",branchid);
+            query.setParameter("bikeId",bikeid);
+            int result1=query.executeUpdate();
+            entityManager.getTransaction().commit();
+            if (result1==1){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            log.info(e.getMessage());
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public List<BikeEntity> unselectedBike() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("notselectedbike");
+            List<BikeEntity> list=query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public List<BikeEntity> notFullBranch() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("showroomsWithFewBikes");
+            List<BikeEntity> list=query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
         }finally {
             if (entityManager!=null){
                 entityManager.close();
