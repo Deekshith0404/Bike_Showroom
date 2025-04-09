@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Entity
 @Data
 @NamedQuery(name = "usercount",query = "SELECT COUNT(b.id) FROM UserReristerEntity b")
+@NamedQuery(name = "emailcheck",query = "SELECT COUNT(e.email) FROM UserReristerEntity e WHERE e.email = :email")
+
 public class UserReristerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

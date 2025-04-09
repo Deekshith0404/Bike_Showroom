@@ -217,16 +217,7 @@
                         <a class="nav-link active" href="dashboard.jsp">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Bikes</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="userRegister.jsp">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Branches</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Users</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>

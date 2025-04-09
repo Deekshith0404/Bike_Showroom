@@ -168,6 +168,25 @@
             color: white;
             border-top: 1px solid var(--gold);
         }
+
+        .errormessage{
+               color:red;
+        }
+
+        /* New style for ride schedule options */
+        .ride-schedule-options {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: rgba(18, 18, 18, 0.7);
+            border: 1px solid var(--gold);
+            border-radius: 0;
+        }
+
+        .ride-schedule-options.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -218,53 +237,59 @@
                             <form id="registrationForm" action="register" method="post" >
                                 <div class="row mb-3">
                                     <div class="col-md-6">
+                                        <span id="nameerror" class="errormessage"></span>
                                         <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                                        <input type="text" class="form-control" id="name" onChange="onname()" name="name" placeholder="Enter your full name" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
+                                 <span id="ageerror" class="errormessage"></span>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="age" class="form-label">Age</label>
-                                        <input type="number" class="form-control" id="age" name="age" placeholder="Enter your age" min="18" required>
+                                        <input type="number" class="form-control" onChange="onage()" id="age" name="age" placeholder="Enter your age" min="18" required>
                                     </div>
+                                    <span id="dlnoerror" class="errormessage"></span>
                                     <div class="col-md-6">
                                         <label for="dlno" class="form-label">Driving License No.</label>
-                                        <input type="text" class="form-control" id="dlno" name="dlno" placeholder="Enter DL number" required>
+                                        <input type="text" class="form-control" id="dlno" name="dlno" onChange="ondlno()" placeholder="Enter DL number" required>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
+                                    <span id="addresserror" class="errormessage"></span>
                                     <label for="address" class="form-label">Address</label>
-                                    <textarea class="form-control" id="address" rows="2" name="address" placeholder="Enter your full address" required></textarea>
+                                    <textarea class="form-control" id="address" rows="2" onChange="onaddress()" name="address" placeholder="Enter your full address" required></textarea>
                                 </div>
 
                                 <div class="row mb-3">
+                                        <span id="phoneerror" class="errormessage"></span>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" id="phone" name="number" placeholder="Enter phone number" required>
+                                        <input type="tel" class="form-control" onChange="onnumber()" id="phone" name="number" placeholder="Enter phone number" required>
                                     </div>
+                                        <span id="emailerror" class="errormessage"></span>
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">Email ID</label>
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email address" required>
+                                        <input type="email" class="form-control" id="email" onChange="onemail()" name="email" placeholder="Enter email address" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="showroom" class="form-label">Preferred Showroom</label>
-                                                                                <select class="form-select" id="showroom" name="showroom" required>
-                                                                                    <option value="" selected disabled>Select showroom</option>
-                                                                                    <option>Mumbai Central</option>
-                                                                                    <option>Delhi West</option>
-                                                                                    <option>Bangalore South</option>
-                                                                                    <option>Chennai East</option>
-                                                                                    <option>Kolkata North</option>
-                                                                                </select>
+                                        <select class="form-select" id="showroom" name="showroom" required>
+                                             <option value="" selected disabled>Select showroom</option>
+                                             <option>Mumbai Central</option>
+                                             <option>Delhi West</option>
+                                             <option>Bangalore South</option>
+                                              <option>Chennai East</option>
+                                               <option>Kolkata North</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="bike" class="form-label">Bike Model</label>
-                                        <select class="form-select" id="bike" required>
+                                        <select class="form-select" id="bike" name="bike" required>
                                              <option value="" selected disabled>Select your bike</option>
                                              <option>Classic 350</option>
                                              <option>Bullet 350</option>
@@ -292,6 +317,29 @@
                                             </label>
                                         </div>
                                     </div>
+
+                                    <!-- Ride Schedule Options (hidden by default) -->
+                                    <div id="rideScheduleOptions" class="ride-schedule-options show">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="rideDate" class="form-label">Select Date</label>
+                                                <input type="date" class="form-control" id="rideDate" name="rideDate" min="">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="rideTime" class="form-label">Select Time Slot</label>
+                                                <select class="form-select" id="rideTime" name="rideTime">
+                                                    <option value="" selected disabled>Choose time slot</option>
+                                                    <option>09:00 AM - 10:00 AM</option>
+                                                    <option>10:00 AM - 11:00 AM</option>
+                                                    <option>11:00 AM - 12:00 PM</option>
+                                                    <option>12:00 PM - 01:00 PM</option>
+                                                    <option>02:00 PM - 03:00 PM</option>
+                                                    <option>03:00 PM - 04:00 PM</option>
+                                                    <option>04:00 PM - 05:00 PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="d-grid">
@@ -304,8 +352,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer (from your original code) -->
     <footer>
         <div class="container text-center py-4">
             <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" class="footer-logo" style="height: 50px; filter: brightness(0) invert(1); margin-bottom: 1.5rem;">
@@ -344,82 +390,6 @@
                 }
             });
 
-            // Form validation and submission
-            const registrationForm = document.getElementById('registrationForm');
-
-            registrationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Validate form
-                if (validateForm()) {
-                    // Get form data
-                    const formData = {
-                        id: document.getElementById('id').value,
-                        name: document.getElementById('name').value,
-                        age: document.getElementById('age').value,
-                        dlno: document.getElementById('dlno').value,
-                        address: document.getElementById('address').value,
-                        phone: document.getElementById('phone').value,
-                        email: document.getElementById('email').value,
-                        bike: document.getElementById('bike').value,
-                        showroom: document.getElementById('showroom').value,
-                        rideOption: document.querySelector('input[name="rideOption"]:checked').value
-                    };
-
-                    // Here you would typically send the data to a server
-                    console.log('Form submitted:', formData);
-
-                    // Show success message
-                    alert('Registration successful! We will contact you soon.');
-
-                    // Reset form
-                    registrationForm.reset();
-                }
-            });
-
-            function validateForm() {
-                let isValid = true;
-                const inputs = registrationForm.querySelectorAll('input, select, textarea');
-
-                inputs.forEach(input => {
-                    if (input.hasAttribute('required') && !input.value) {
-                        input.style.borderColor = 'red';
-                        isValid = false;
-                    } else {
-                        input.style.borderColor = 'var(--gold)';
-                    }
-
-                    // Special validation for email
-                    if (input.type === 'email' && input.value) {
-                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                        if (!emailRegex.test(input.value)) {
-                            input.style.borderColor = 'red';
-                            isValid = false;
-                        }
-                    }
-
-                    // Special validation for phone
-                    if (input.id === 'phone' && input.value) {
-                        const phoneRegex = /^[0-9]{10,15}$/;
-                        if (!phoneRegex.test(input.value)) {
-                            input.style.borderColor = 'red';
-                            isValid = false;
-                        }
-                    }
-
-                    // Special validation for age
-                    if (input.id === 'age' && input.value) {
-                        if (parseInt(input.value) < 18) {
-                            input.style.borderColor = 'red';
-                            isValid = false;
-                            alert('You must be at least 18 years old to register.');
-                        }
-                    }
-                });
-
-                return isValid;
-            }
-
             // Add animation to form elements
             const formElements = document.querySelectorAll('.form-control, .form-select, .form-check-input, .btn-register');
             formElements.forEach((element, index) => {
@@ -427,7 +397,91 @@
                 element.style.transform = 'translateY(20px)';
                 element.style.animation = `fadeIn 0.5s ease-out ${index * 0.1}s forwards`;
             });
+
+            // Set minimum date for ride scheduling (today)
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('rideDate').min = today;
+
+            // Toggle ride schedule options based on radio selection
+            const scheduleRadio = document.getElementById('schedule');
+            const bookNowRadio = document.getElementById('bookNow');
+            const rideScheduleOptions = document.getElementById('rideScheduleOptions');
+
+            function toggleRideOptions() {
+                if (scheduleRadio.checked) {
+                    rideScheduleOptions.classList.add('show');
+                    // Make date and time required
+                    document.getElementById('rideDate').required = true;
+                    document.getElementById('rideTime').required = true;
+                } else {
+                    rideScheduleOptions.classList.remove('show');
+                    // Remove required attribute when not scheduling
+                    document.getElementById('rideDate').required = false;
+                    document.getElementById('rideTime').required = false;
+                }
+            }
+
+            // Initial check
+            toggleRideOptions();
+
+            // Add event listeners
+            scheduleRadio.addEventListener('change', toggleRideOptions);
+            bookNowRadio.addEventListener('change', toggleRideOptions);
         });
+
+        function onname(){
+            var name=document.getElementById('name').value;
+            const patter=/^[A-Z][a-z]*$/;
+            if(patter.test(name)){
+                document.getElementById('nameerror').innerHTML="";
+            }else{
+                document.getElementById('nameerror').innerHTML="invalid pattern start the name with captial letter";
+            }
+        }
+
+        function onage(){
+            var age=document.getElementById('age').value;
+            if(age<16){
+                document.getElementById('ageerror').innerHTML="age must be above 16";
+            }else{
+                document.getElementById('ageerror').innerHTML="";
+            }
+        }
+
+        function onnumber(){
+            var number=document.getElementById('phone').value;
+            const pattern=/^[98]\d{9}$/;
+            if(pattern.test(number)){
+                   document.getElementById('phoneerror').innerHTML=""
+            }else{
+                document.getElementById('phoneerror').innerHTML="invalid number pattern and size must be 10";
+            }
+        }
+
+        function onemail() {
+            var email=document.getElementById('email')
+            var emailvalue=email.value;
+            console.log(name)
+            console.log(emailvalue)
+
+            if (emailvalue!=="") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET","http://localhost:8090/commmon-modules/email?email="+emailvalue);
+                xhttp.send();
+
+                xhttp.onload = function(){
+                    document.getElementById("emailerror").innerHTML = this.responseText;
+                }
+            }
+        }
+
+        function ondlno() {
+            // Add your DL number validation logic here if needed
+        }
+
+        function onaddress() {
+            // Add your address validation logic here if needed
+        }
     </script>
 </body>
 </html>
