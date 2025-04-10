@@ -13,7 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class OwnerRepoImpl implements OwnerRepo {
@@ -162,7 +164,8 @@ public class OwnerRepoImpl implements OwnerRepo {
         try{
             entityManager.getTransaction().begin();
             Query query=entityManager.createNamedQuery("allbranchdata");
-            List<BranchEntity> list= query.getResultList();
+                List<BranchEntity> list= query.getResultList();
+            System.out.println("------------------"+list);
             return list;
         }catch (Exception e){
             log.error(e.getMessage());
@@ -262,6 +265,33 @@ public class OwnerRepoImpl implements OwnerRepo {
             Query query=entityManager.createNamedQuery("showroomsWithFewBikes");
             List<BikeEntity> list=query.getResultList();
             return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public Map<Integer,String> branchnames() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("branchname");
+            List<Object> list = query.getResultList();
+            Map<Integer,String> result= new HashMap<>();
+            for (Object obj : list) {
+                Object[] entry = (Object[]) obj;
+                Integer key = (Integer) entry[0];
+                String value = (String) entry[1];
+                result.put(key,value);
+
+            }
+            return result;
         }catch (Exception e){
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();

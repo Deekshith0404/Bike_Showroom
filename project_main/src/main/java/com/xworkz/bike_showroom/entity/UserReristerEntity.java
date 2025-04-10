@@ -17,8 +17,8 @@ public class UserReristerEntity {
     private Integer age;
     private String dlNumber;
     private String address;
-    private Long phoneNumber;
+    private Long number;
     private String email;
     private String showroom;
-    private String bikeModel;
+    private String bikemodel;
 }

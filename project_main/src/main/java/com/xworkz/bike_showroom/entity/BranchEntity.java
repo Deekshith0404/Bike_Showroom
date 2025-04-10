@@ -14,6 +14,7 @@ import java.util.List;
         name = "showroomsWithFewBikes",
         query = "SELECT b FROM BranchEntity b WHERE (SELECT COUNT(bk.id) FROM BikeEntity bk WHERE bk.branchEntity.id = b.id) < 5"
 )
+@NamedQuery(name = "branchname",query = "SELECT p.id,p.name FROM BranchEntity p")
 public class BranchEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

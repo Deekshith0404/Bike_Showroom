@@ -187,6 +187,12 @@
             display: block;
             animation: fadeIn 0.5s ease-out;
         }
+        .dropdown{
+            color:black;
+        }
+        .resultcolor{
+            color:red;
+        }
     </style>
 </head>
 <body>
@@ -234,41 +240,41 @@
                             <h2 class="card-title">Register With Us</h2>
                         </div>
                         <div class="card-body p-4">
-                            <form id="registrationForm" action="register" method="post" >
+                            <form id="registrationForm" action="register" method="post" enctype="multipart/form-data">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <span id="nameerror" class="errormessage"></span>
+                                        <span id="nameerror" class="errormessage"></span><br>
                                         <label for="name" class="form-label">Full Name</label>
                                         <input type="text" class="form-control" id="name" onChange="onname()" name="name" placeholder="Enter your full name" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                 <span id="ageerror" class="errormessage"></span>
+                                 <span id="ageerror" class="errormessage"></span><br>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="age" class="form-label">Age</label>
                                         <input type="number" class="form-control" onChange="onage()" id="age" name="age" placeholder="Enter your age" min="18" required>
                                     </div>
-                                    <span id="dlnoerror" class="errormessage"></span>
+                                    <span id="dlnoerror" class="errormessage"></span><br>
                                     <div class="col-md-6">
                                         <label for="dlno" class="form-label">Driving License No.</label>
-                                        <input type="text" class="form-control" id="dlno" name="dlno" onChange="ondlno()" placeholder="Enter DL number" required>
+                                        <input type="text" class="form-control" id="dlno" name="dlNumber" onChange="ondlno()" placeholder="Enter DL number" required>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <span id="addresserror" class="errormessage"></span>
+                                    <span id="addresserror" class="errormessage"></span><br>
                                     <label for="address" class="form-label">Address</label>
                                     <textarea class="form-control" id="address" rows="2" onChange="onaddress()" name="address" placeholder="Enter your full address" required></textarea>
                                 </div>
 
                                 <div class="row mb-3">
-                                        <span id="phoneerror" class="errormessage"></span>
+                                        <span id="phoneerror" class="errormessage"></span><br>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="phone" class="form-label">Phone Number</label>
                                         <input type="tel" class="form-control" onChange="onnumber()" id="phone" name="number" placeholder="Enter phone number" required>
                                     </div>
-                                        <span id="emailerror" class="errormessage"></span>
+                                        <span id="emailerror" class="errormessage"></span><br>
                                     <div class="col-md-6">
                                         <label for="email" class="form-label">Email ID</label>
                                         <input type="email" class="form-control" id="email" onChange="onemail()" name="email" placeholder="Enter email address" required>
@@ -279,24 +285,26 @@
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="showroom" class="form-label">Preferred Showroom</label>
                                         <select class="form-select" id="showroom" name="showroom" required>
-                                             <option value="" selected disabled>Select showroom</option>
-                                             <option>Mumbai Central</option>
-                                             <option>Delhi West</option>
-                                             <option>Bangalore South</option>
-                                              <option>Chennai East</option>
-                                               <option>Kolkata North</option>
+                                             <option value="" selected disabled>-- Select Branch --</option>
+                                             <div class="dropdown">
+                                                 <c:forEach items="${branchdata}" var="branch">
+                                                      <option value="${branch.key}">${branch.value}</option>
+                                                 </c:forEach>
+                                             </div>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="bike" class="form-label">Bike Model</label>
-                                        <select class="form-select" id="bike" name="bike" required>
+                                        <select class="form-select" id="bike" name="bikemodel" required>
                                              <option value="" selected disabled>Select your bike</option>
+                                             <div class="dropdown">
                                              <option>Classic 350</option>
                                              <option>Bullet 350</option>
                                              <option>Meteor 350</option>
                                              <option>Interceptor 650</option>
                                              <option>Continental GT 650</option>
                                              <option>Himalayan</option>
+                                             </div>
                                           </select>
                                     </div>
                                 </div>
@@ -329,6 +337,7 @@
                                                 <label for="rideTime" class="form-label">Select Time Slot</label>
                                                 <select class="form-select" id="rideTime" name="rideTime">
                                                     <option value="" selected disabled>Choose time slot</option>
+                                                    <div class="dropdown">
                                                     <option>09:00 AM - 10:00 AM</option>
                                                     <option>10:00 AM - 11:00 AM</option>
                                                     <option>11:00 AM - 12:00 PM</option>
@@ -336,6 +345,7 @@
                                                     <option>02:00 PM - 03:00 PM</option>
                                                     <option>03:00 PM - 04:00 PM</option>
                                                     <option>04:00 PM - 05:00 PM</option>
+                                                    </div>
                                                 </select>
                                             </div>
                                         </div>
@@ -466,7 +476,7 @@
 
             if (emailvalue!=="") {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET","http://localhost:8090/commmon-modules/email?email="+emailvalue);
+                xhttp.open("GET","http://localhost:8081/project_main/emailval?email="+emailvalue);
                 xhttp.send();
 
                 xhttp.onload = function(){

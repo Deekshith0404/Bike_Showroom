@@ -3,6 +3,7 @@ package com.xworkz.bike_showroom.controller;
 import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
+import com.xworkz.bike_showroom.entity.BranchEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
 import com.xworkz.bike_showroom.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -68,8 +70,9 @@ public class LoginController {
 //    String filename=path.getFileName().toString();
 //        regFormDto.setProfile(filename);
 //        System.out.println("this is file===========");
-    @PostMapping("/addbike")
+    @RequestMapping("/addbike")
     public String addnewbike(BikeDto bikeDto, Model model) throws IOException {
+        System.out.println("---------------------------------------------------------------");
     byte[] bytes=bikeDto.getFront().getBytes();
     Path path=Paths.get("E:\\commons\\front\\"+bikeDto.getBikename()+System.currentTimeMillis());
     Files.write(path,bytes);
@@ -126,6 +129,14 @@ public class LoginController {
             model.addAttribute("branchresult","bike cannot be added");
         }
         return "dashboard";
+    }
+
+
+    @RequestMapping("/startRegister")
+    public String startRegister(Model model){
+        model.addAttribute("branchdata",ownerLogin.branchnames());
+        System.out.println(ownerLogin.branchnames());
+        return "userRegister.jsp";
     }
 
 

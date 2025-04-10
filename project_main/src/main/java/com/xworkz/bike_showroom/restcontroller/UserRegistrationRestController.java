@@ -16,7 +16,7 @@ public class UserRegistrationRestController {
     UserService userService;
 
 
-    @GetMapping(value = "/email")
+    @GetMapping(value = "/emailval")
     public String onEmail(@RequestParam("email") String email ){
         System.out.println("invoking in the onEmail............");
         Long count= userService.emailoccurence(email);

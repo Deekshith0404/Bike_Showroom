@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -90,5 +91,10 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<BikeEntity> notFullBranch() {
         return ownerRepo.notFullBranch();
+    }
+
+    @Override
+    public Map<Integer,String> branchnames() {
+        return ownerRepo.branchnames();
     }
 }

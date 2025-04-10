@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class UserRegisterDto {
@@ -14,4 +15,6 @@ public class UserRegisterDto {
     private String email;
     private String showroom;
     private String bikeModel;
+    private MultipartFile profilefile;
+    private String profile;
 }

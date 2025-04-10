@@ -217,7 +217,7 @@
                         <a class="nav-link active" href="dashboard.jsp">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="userRegister.jsp">Register</a>
+                        <a class="nav-link" href="startRegister">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp"><i class="fas fa-sign-out-alt"></i> Logout</a>

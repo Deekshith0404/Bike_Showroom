@@ -27,7 +27,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                         url('images/bikeimg.jpg');
             background-size: cover;
             background-position: center;

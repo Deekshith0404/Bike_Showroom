@@ -8,6 +8,7 @@ import com.xworkz.bike_showroom.entity.BranchEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OwnerService {
     OwnerLoginEntity checkemail(String email);
@@ -23,5 +24,7 @@ public interface OwnerService {
     boolean addbiketobranch(int branchid,int bikeid);
     List<BikeEntity> unselectedBike();
     List<BikeEntity> notFullBranch();
+    Map<Integer,String> branchnames();
+
 
 }
