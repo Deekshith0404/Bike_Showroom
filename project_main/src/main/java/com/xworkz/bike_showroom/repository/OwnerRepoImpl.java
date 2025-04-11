@@ -1,9 +1,6 @@
 package com.xworkz.bike_showroom.repository;
 
-import com.xworkz.bike_showroom.entity.BikeEntity;
-import com.xworkz.bike_showroom.entity.BranchEntity;
-import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
-import com.xworkz.bike_showroom.entity.UserReristerEntity;
+import com.xworkz.bike_showroom.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -277,21 +274,51 @@ public class OwnerRepoImpl implements OwnerRepo {
     }
 
     @Override
-    public Map<Integer,String> branchnames() {
+    public List<String> branchnames() {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
             entityManager.getTransaction().begin();
             Query query=entityManager.createNamedQuery("branchname");
-            List<Object> list = query.getResultList();
-            Map<Integer,String> result= new HashMap<>();
-            for (Object obj : list) {
-                Object[] entry = (Object[]) obj;
-                Integer key = (Integer) entry[0];
-                String value = (String) entry[1];
-                result.put(key,value);
-
+            List<String> list = query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return null;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
             }
-            return result;
+        }
+    }
+
+    @Override
+    public boolean followUp(FollowUpEntity followUpEntity) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(followUpEntity);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public List<UserReristerEntity> getalluser() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("getalluser");
+            List<UserReristerEntity> list=query.getResultList();
+            return list;
         }catch (Exception e){
             log.error(e.getMessage());
             entityManager.getTransaction().rollback();

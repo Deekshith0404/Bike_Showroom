@@ -12,9 +12,11 @@ public class UserRegisterDto {
     private String dlNumber;
     private String address;
     private Long phoneNumber;
+    private String rideOption;
     private String email;
     private String showroom;
     private String bikeModel;
     private MultipartFile profilefile;
     private String profile;
+    private String userStatus;
 }

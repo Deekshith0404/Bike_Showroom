@@ -288,7 +288,7 @@
                                              <option value="" selected disabled>-- Select Branch --</option>
                                              <div class="dropdown">
                                                  <c:forEach items="${branchdata}" var="branch">
-                                                      <option value="${branch.key}">${branch.value}</option>
+                                                      <option value="${branch}">${branch}</option>
                                                  </c:forEach>
                                              </div>
                                         </select>

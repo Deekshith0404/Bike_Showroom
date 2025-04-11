@@ -311,8 +311,9 @@
                                             <td>${bike.bikename}</td>
                                             <td>${bike.cc}</span></td>
                                             <td>
-                                                <button class="btn btn-outline-gold btn-sm">Edit</button>
-                                                <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <a href="edit?id=${bike.model}" class="btn btn-outline-gold btn-sm">Edit</a>
+                                                <a href="edit?id=${follow.name}" class="btn btn-outline-danger btn-sm">Delete</a>
+
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -349,8 +350,8 @@
                                             <td>${branch.location}</td>
                                             <td><span class="status-badge ${branch.status == 'active' ? 'status-active' : 'status-inactive'}">${branch.status}</span></td>
                                             <td>
-                                                <button class="btn btn-outline-gold btn-sm">Edit</button>
-                                                <button class="btn btn-outline-danger btn-sm">Delete</button>
+                                                <a href="branchEdit?name=${branch.name}" class="btn btn-outline-gold btn-sm">Edit</a>
+                                                <a href="branchDelete?name=${branch.name}" class="btn btn-outline-danger btn-sm">delete</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -361,6 +362,45 @@
                 </div>
             </div>
         </div>
+        <!-- followup page -->
+       <div class="row">
+        <div class="col-sm-9 p-3">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Follow up</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                                    <table class="table table-hover">
+                                        <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                                            <tr>
+                                                <th>User</th>
+                                                <th>RideOption</th>
+                                                <th>Model</th>
+                                                <th>showroom</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${followIt}" var="follow">
+                                                <tr>
+                                                    <td>${follow.name}</td>
+                                                    <td>${follow.rideOption}</td>
+                                                    <td>${follow.bikemodel}</td>
+                                                    <td>${follow.showroom}</td>
+                                                    <td>
+                                                        <a href="edit?id=${follow.name}" class="btn btn-outline-gold btn-sm">Edit</a>
+                                                        <a href="view?id=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
         </div>
     </div>
 
@@ -525,7 +565,6 @@
             </div>
         </div>
     </div>
-
     <footer>
         <div class="container text-center">
             <p class="copyright mb-0"> © 2025 Royal Enfield. All Rights Reserved. | Made with <i class="fas fa-heart" style="color: var(--gold);"></i> for Motorcycle Enthusiasts</p>

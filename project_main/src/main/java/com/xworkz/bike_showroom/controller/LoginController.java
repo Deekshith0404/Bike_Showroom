@@ -2,6 +2,7 @@ package com.xworkz.bike_showroom.controller;
 
 import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
+import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.BranchEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -61,6 +64,7 @@ public class LoginController {
         model.addAttribute("justbike",ownerLogin.allbikedata());
         model.addAttribute("unSelBike",ownerLogin.unselectedBike());
         model.addAttribute("notfullbranch",ownerLogin.notFullBranch());
+        model.addAttribute("followIt",ownerLogin.getalluser());
         return "dashboard.jsp";
     }
 
@@ -108,8 +112,13 @@ public class LoginController {
     }
 
     @RequestMapping("/register")
-    public String registration(Model model, UserRegisterDto userRegisterDto){
+    public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto){
+        userRegisterDto.setUserStatus("Active");
         boolean result= ownerLogin.register(userRegisterDto);
+        followUpDto.setDate(LocalDate.now());
+        followUpDto.setTime(LocalTime.now());
+        followUpDto.setStatus(userRegisterDto.getRideOption());
+                        ownerLogin.followUp(followUpDto);
         if (result){
             model.addAttribute("result","Registration success!! now Login");
 
@@ -135,9 +144,9 @@ public class LoginController {
     @RequestMapping("/startRegister")
     public String startRegister(Model model){
         model.addAttribute("branchdata",ownerLogin.branchnames());
-        System.out.println(ownerLogin.branchnames());
         return "userRegister.jsp";
     }
+
 
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Data
 @NamedQuery(name = "usercount",query = "SELECT COUNT(b.id) FROM UserReristerEntity b")
 @NamedQuery(name = "emailcheck",query = "SELECT COUNT(e.email) FROM UserReristerEntity e WHERE e.email = :email")
-
+@NamedQuery(name = "getalluser",query = "Select u from UserReristerEntity u")
 public class UserReristerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,5 +20,7 @@ public class UserReristerEntity {
     private Long number;
     private String email;
     private String showroom;
+    private String rideOption;
     private String bikemodel;
+    private String userStatus;
 }

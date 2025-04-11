@@ -2,10 +2,9 @@ package com.xworkz.bike_showroom.service;
 
 import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
+import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
-import com.xworkz.bike_showroom.entity.BikeEntity;
-import com.xworkz.bike_showroom.entity.BranchEntity;
-import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
+import com.xworkz.bike_showroom.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,10 @@ public interface OwnerService {
     boolean addbiketobranch(int branchid,int bikeid);
     List<BikeEntity> unselectedBike();
     List<BikeEntity> notFullBranch();
-    Map<Integer,String> branchnames();
+    List<String> branchnames();
+    boolean followUp(FollowUpDto followUpDto);
+    List<UserReristerEntity> getalluser();
+
 
 
 }

@@ -2,11 +2,9 @@ package com.xworkz.bike_showroom.service;
 
 import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
+import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
-import com.xworkz.bike_showroom.entity.BikeEntity;
-import com.xworkz.bike_showroom.entity.BranchEntity;
-import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
-import com.xworkz.bike_showroom.entity.UserReristerEntity;
+import com.xworkz.bike_showroom.entity.*;
 import com.xworkz.bike_showroom.repository.OwnerRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +92,19 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Map<Integer,String> branchnames() {
+    public List<String> branchnames() {
         return ownerRepo.branchnames();
+    }
+
+    @Override
+    public boolean followUp(FollowUpDto followUpDto) {
+        FollowUpEntity followUp=new FollowUpEntity();
+        BeanUtils.copyProperties(followUpDto,followUp);
+         return ownerRepo.followUp(followUp);
+    }
+
+    @Override
+    public List<UserReristerEntity> getalluser() {
+        return ownerRepo.getalluser();
     }
 }

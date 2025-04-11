@@ -1,9 +1,6 @@
 package com.xworkz.bike_showroom.repository;
 
-import com.xworkz.bike_showroom.entity.BikeEntity;
-import com.xworkz.bike_showroom.entity.BranchEntity;
-import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
-import com.xworkz.bike_showroom.entity.UserReristerEntity;
+import com.xworkz.bike_showroom.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +19,8 @@ public interface OwnerRepo {
     boolean addbiketobranch(int branchid,int bikeid);
     List<BikeEntity> unselectedBike();
     List<BikeEntity> notFullBranch();
-    Map<Integer,String> branchnames();
+    List<String> branchnames();
+    boolean followUp(FollowUpEntity followUpEntity);
+    List<UserReristerEntity> getalluser();
 
 }
