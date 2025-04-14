@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
+
 @Repository
 public class UserRepoImpl implements UserRepo{
 
@@ -32,6 +35,25 @@ public class UserRepoImpl implements UserRepo{
             if (entityManager!=null){
                 entityManager.close();
             }
+        }
+    }
+
+    @Override
+    public List<String> getbikeonbranch(String branchname) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query1=entityManager.createNamedQuery("branchnamefromid");
+            query1.setParameter("name",branchname);
+            int id= (int) query1.getSingleResult();
+            System.out.println(id);
+            Query query=entityManager.createNamedQuery("getnameonbranch");
+            query.setParameter("branchid",id);
+            List<String> bike= query.getResultList();
+            return bike;
+        }catch (Exception e){
+         log.error(e.getMessage());
+         return null;
         }
     }
 }

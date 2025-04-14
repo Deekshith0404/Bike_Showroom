@@ -117,6 +117,7 @@ public class LoginController {
         boolean result= ownerLogin.register(userRegisterDto);
         followUpDto.setDate(LocalDate.now());
         followUpDto.setTime(LocalTime.now());
+        followUpDto.setMessage("registered");
         followUpDto.setStatus(userRegisterDto.getRideOption());
                         ownerLogin.followUp(followUpDto);
         if (result){

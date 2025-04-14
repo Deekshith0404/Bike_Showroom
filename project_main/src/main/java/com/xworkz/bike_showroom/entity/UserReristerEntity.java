@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.entity;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
@@ -17,10 +18,13 @@ public class UserReristerEntity {
     private Integer age;
     private String dlNumber;
     private String address;
-    private Long number;
+    private Long phoneNumber;
+    private String rideOption;
     private String email;
     private String showroom;
-    private String rideOption;
-    private String bikemodel;
+    private String bikeModel;
+    private String profile;
     private String userStatus;
+    private String rideDate;
+    private String rideTime;
 }

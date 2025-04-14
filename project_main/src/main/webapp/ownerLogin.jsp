@@ -223,7 +223,7 @@
             <div class="mb-3">
                 <a id="getOtpLink" class="otp-link" onclick="sendOtp()">Get OTP</a>
                 <div id="countdown" class="countdown">OTP valid for: 02:00</div>
-            </div>
+            </div>sendOtp
             
             <div class="mb-3">
                 <input type="password" class="form-control-custom" id="password" name="password" placeholder="Password" required disabled>

@@ -19,4 +19,6 @@ public class UserRegisterDto {
     private MultipartFile profilefile;
     private String profile;
     private String userStatus;
+    private String rideDate;
+    private String rideTime;
 }

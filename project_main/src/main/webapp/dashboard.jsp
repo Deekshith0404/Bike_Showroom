@@ -350,7 +350,7 @@
                                             <td>${branch.location}</td>
                                             <td><span class="status-badge ${branch.status == 'active' ? 'status-active' : 'status-inactive'}">${branch.status}</span></td>
                                             <td>
-                                                <a href="branchEdit?name=${branch.name}" class="btn btn-outline-gold btn-sm">Edit</a>
+                                                <a href="branchEdit?name=${branch.name}" class="btn btn-outline-gold btn-sm" >Edit</a>
                                                 <a href="branchDelete?name=${branch.name}" class="btn btn-outline-danger btn-sm">delete</a>
                                             </td>
                                         </tr>
@@ -368,6 +368,7 @@
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Follow up</span>
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
@@ -388,8 +389,8 @@
                                                     <td>${follow.bikemodel}</td>
                                                     <td>${follow.showroom}</td>
                                                     <td>
-                                                        <a href="edit?id=${follow.name}" class="btn btn-outline-gold btn-sm">Edit</a>
-                                                        <a href="view?id=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
+                                                        <a href="followupedit?name=${follow.name}" class="btn btn-outline-gold btn-sm" data-bs-target="#editfollowupLabel">Edit</a>
+                                                        <a href="followupview?name=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -399,8 +400,7 @@
                             </div>
                         </div>
                     </div>
-        </div>
-
+         </div>
         </div>
     </div>
 
@@ -469,6 +469,66 @@
             </div>
         </div>
     </div>
+    <!-- edit the follow up page -->
+    <div class="modal fade" id="editfollowup" tabindex="-1" aria-labelledby="editfollowupLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editfollowup"></i>Follow UP</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="followupedit" method="post">
+                            <div class="row mb-6">
+                                    <label for="Name" class="form-label"> Name</label>
+                                    <input type="text" class="form-control" id="name" name="editName" required>
+                            </div>
+                            <div class="row mb-6">
+                                     <label for="Status" class="form-label">Status</label>
+                                     <input type="text" class="form-control" id="status" name="status" required>
+                            </div>
+                            <div class="row mb-6">
+                                    <label for="date" class="form-label">Date </label>
+                                    <input type="text" class="form-control" name="date" id="date"  required>
+                            </div>
+                            <div class="col-md-6">
+                                   <label for="bikeMileage" class="form-label">Time</label>
+                                   <input type="text" class="form-control" name="time" id="time" required>
+                            </div>
+                                <div class="col-md-6">
+                                    <label for="bikePrice" class="form-label">Message</label>
+                                    <input type="message" class="form-control" name="message" id="message" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="bikeColor" class="form-label">Available Colors</label>
+                                    <input type="text" class="form-control" name="color" id="bikeColor" placeholder="e.g., Black, Red, Blue">
+                                </div>
+                            <div class="mb-3">
+                                <label for="bikeImage" class="form-label">front image</label>
+                                <input class="form-control" type="file" name="front" id="bikeImage" name="front">
+                            </div>
+                            <div class="mb-3">
+                                 <label for="bikeImage" class="form-label">Left-Side image</label>
+                                 <input class="form-control" name="left" type="file" id="bikeImage" name="left">
+                            </div>
+                            <div class="mb-3">
+                                  <label for="bikeImage" class="form-label">Rigth-Side image</label>
+                                  <input class="form-control" name="right" type="file" id="bikeImage" name="right">
+                            </div>
+                            <div class="mb-3">
+                                   <label for="bikeImage" class="form-label">Bike-back image</label>
+                                   <input class="form-control" name="back" type="file" id="bikeImage" name="back">
+                            </div>
+                            <div class="modal-footer">
+                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                   <input type="submit" class="btn btn-gold" value="add"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     <!-- Add Bike to Showroom Modal -->
     <div class="modal fade" id="showroomBikeModal" tabindex="-1" aria-labelledby="showroomBikeModalLabel" aria-hidden="true">

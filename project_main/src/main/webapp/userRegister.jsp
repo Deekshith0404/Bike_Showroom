@@ -193,6 +193,9 @@
         .resultcolor{
             color:red;
         }
+        option{
+            color:black;
+        }
     </style>
 </head>
 <body>
@@ -272,7 +275,7 @@
                                         <span id="phoneerror" class="errormessage"></span><br>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" onChange="onnumber()" id="phone" name="number" placeholder="Enter phone number" required>
+                                        <input type="tel" class="form-control" onChange="onnumber()" id="phone" name="phoneNumber" placeholder="Enter phone number" required>
                                     </div>
                                         <span id="emailerror" class="errormessage"></span><br>
                                     <div class="col-md-6">
@@ -284,7 +287,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="showroom" class="form-label">Preferred Showroom</label>
-                                        <select class="form-select" id="showroom" name="showroom" required>
+                                        <select class="form-select" id="showroom" name="showroom" onChange="fetchBikes()" required>
                                              <option value="" selected disabled>-- Select Branch --</option>
                                              <div class="dropdown">
                                                  <c:forEach items="${branchdata}" var="branch">
@@ -295,15 +298,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="bike" class="form-label">Bike Model</label>
-                                        <select class="form-select" id="bike" name="bikemodel" required>
+                                        <select class="form-select" id="bike" name="bikeModel" required>
                                              <option value="" selected disabled>Select your bike</option>
                                              <div class="dropdown">
-                                             <option>Classic 350</option>
-                                             <option>Bullet 350</option>
-                                             <option>Meteor 350</option>
-                                             <option>Interceptor 650</option>
-                                             <option>Continental GT 650</option>
-                                             <option>Himalayan</option>
+                                             <option></option>
                                              </div>
                                           </select>
                                     </div>
@@ -484,6 +482,27 @@
                 }
             }
         }
+
+        function fetchBikes() {
+          const branchId = document.getElementById('showroom').value;
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", "http://localhost:8081/project_main/getbranchbike?branchname="+branchId);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              const bikes = JSON.parse(xhr.responseText);
+              const bikeDropdown = document.getElementById('bike');
+              bikeDropdown.innerHTML = '<option value="" disabled selected>Select a bike</option>'; // Clear previous options
+              bikes.forEach(bike => {
+                const option = document.createElement('option');
+                option.value = bike;
+                option.textContent = bike;
+                bikeDropdown.appendChild(option);
+              });
+            }
+          };
+          xhr.send();
+        }
+
 
         function ondlno() {
             // Add your DL number validation logic here if needed
