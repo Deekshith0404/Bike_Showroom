@@ -6,6 +6,7 @@ import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.BranchEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import com.xworkz.bike_showroom.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +22,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -148,6 +152,28 @@ public class LoginController {
         return "userRegister.jsp";
     }
 
+    @RequestMapping("/followupedit")
+    @ResponseBody
+    public UserReristerEntity followupedit(@RequestParam("name")String name, Model model)
+    {
+        System.out.println("-------------------");
+        return ownerLogin.getalluserbyname(name);
+
+    }
+
+    @RequestMapping("/followupeditsubmit")
+    public String editfollowup(FollowUpDto followUpDto,Model model){
+
+        followUpDto.setDate(LocalDate.now());
+        followUpDto.setTime(LocalTime.now());
+         Boolean result=ownerLogin.editfollowupsubmit(followUpDto);
+        if (result){
+            model.addAttribute("result","updated successfully");
+        }else {
+            model.addAttribute("result","update faild !! try again");
+        }
+        return "dashboard";
+    }
 
 
 }

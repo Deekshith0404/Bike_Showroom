@@ -22,5 +22,7 @@ public interface OwnerRepo {
     List<String> branchnames();
     boolean followUp(FollowUpEntity followUpEntity);
     List<UserReristerEntity> getalluser();
+    UserReristerEntity getalluserbyname(String name);
+    boolean editfollowupsubmit(FollowUpEntity followUpEntity);
 
 }

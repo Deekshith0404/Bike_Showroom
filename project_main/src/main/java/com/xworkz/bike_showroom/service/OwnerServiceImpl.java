@@ -10,9 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -106,5 +104,17 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<UserReristerEntity> getalluser() {
         return ownerRepo.getalluser();
+    }
+
+    @Override
+    public UserReristerEntity getalluserbyname(String name) {
+        return ownerRepo.getalluserbyname(name);
+    }
+
+    @Override
+    public boolean editfollowupsubmit(FollowUpDto followUpDto) {
+        FollowUpEntity followUp=new FollowUpEntity();
+        BeanUtils.copyProperties(followUpDto,followUp);
+        return ownerRepo.editfollowupsubmit(followUp);
     }
 }

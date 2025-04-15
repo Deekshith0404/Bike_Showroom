@@ -7,7 +7,6 @@ import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.*;
 
 import java.util.List;
-import java.util.Map;
 
 public interface OwnerService {
     OwnerLoginEntity checkemail(String email);
@@ -26,6 +25,9 @@ public interface OwnerService {
     List<String> branchnames();
     boolean followUp(FollowUpDto followUpDto);
     List<UserReristerEntity> getalluser();
+    UserReristerEntity getalluserbyname(String name);
+    boolean editfollowupsubmit(FollowUpDto followUpDto);
+
 
 
 

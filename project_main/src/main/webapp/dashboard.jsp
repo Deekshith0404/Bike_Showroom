@@ -234,6 +234,7 @@
             <div class="reslt">
               ${branchresult}
               ${bikeresult}
+              ${result}
             </div>
         </div>
     </header>
@@ -386,11 +387,11 @@
                                                 <tr>
                                                     <td>${follow.name}</td>
                                                     <td>${follow.rideOption}</td>
-                                                    <td>${follow.bikemodel}</td>
+                                                    <td>${follow.bikeModel}</td>
                                                     <td>${follow.showroom}</td>
                                                     <td>
-                                                        <a href="followupedit?name=${follow.name}" class="btn btn-outline-gold btn-sm" data-bs-target="#editfollowupLabel">Edit</a>
-                                                        <a href="followupview?name=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
+                                                       <a href="#" class="btn btn-outline-gold btn-sm editFollowupBtn" data-bs-toggle="modal" data-name="${follow.name}">Edit</a>
+                                                       <a href="followupview?name=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -474,60 +475,33 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editfollowup"></i>Follow UP</h5>
+                        <h5 class="modal-title" id="editfollowupLabel"></i>Follow UP</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="followupedit" method="post">
-                            <div class="row mb-6">
-                                    <label for="Name" class="form-label"> Name</label>
-                                    <input type="text" class="form-control" id="name" name="editName" required>
-                            </div>
-                            <div class="row mb-6">
-                                     <label for="Status" class="form-label">Status</label>
-                                     <input type="text" class="form-control" id="status" name="status" required>
-                            </div>
-                            <div class="row mb-6">
-                                    <label for="date" class="form-label">Date </label>
-                                    <input type="text" class="form-control" name="date" id="date"  required>
+                        <form action="followupeditsubmit" method="post">
+                            <div class="col-mb-6">
+                                    <label for="Name" class="form-label"> Name : </label>
+                                    <span id="followupName" name="name" ></span>
                             </div>
                             <div class="col-md-6">
-                                   <label for="bikeMileage" class="form-label">Time</label>
-                                   <input type="text" class="form-control" name="time" id="time" required>
+                                   <label for="status" class="form-label">status : </label>
+                                   <span id="followupData" name="status"></span>
                             </div>
                                 <div class="col-md-6">
                                     <label for="bikePrice" class="form-label">Message</label>
                                     <input type="message" class="form-control" name="message" id="message" required>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="bikeColor" class="form-label">Available Colors</label>
-                                    <input type="text" class="form-control" name="color" id="bikeColor" placeholder="e.g., Black, Red, Blue">
-                                </div>
-                            <div class="mb-3">
-                                <label for="bikeImage" class="form-label">front image</label>
-                                <input class="form-control" type="file" name="front" id="bikeImage" name="front">
-                            </div>
-                            <div class="mb-3">
-                                 <label for="bikeImage" class="form-label">Left-Side image</label>
-                                 <input class="form-control" name="left" type="file" id="bikeImage" name="left">
-                            </div>
-                            <div class="mb-3">
-                                  <label for="bikeImage" class="form-label">Rigth-Side image</label>
-                                  <input class="form-control" name="right" type="file" id="bikeImage" name="right">
-                            </div>
-                            <div class="mb-3">
-                                   <label for="bikeImage" class="form-label">Bike-back image</label>
-                                   <input class="form-control" name="back" type="file" id="bikeImage" name="back">
-                            </div>
+
                             <div class="modal-footer">
                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                   <input type="submit" class="btn btn-gold" value="add"/>
+                                   <input type="submit" class="btn btn-gold" value="submit"/>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 
 
     <!-- Add Bike to Showroom Modal -->
@@ -634,6 +608,26 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+    document.querySelectorAll('.editFollowupBtn').forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            let name = this.getAttribute('data-name');
+
+            fetch("http://localhost:8081/project_main/followupedit?name=" + encodeURIComponent(name))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("followupName").textContent = data.name;
+                    document.getElementById("followupData").textContent = data.rideOption;
+
+                    var myModal = new bootstrap.Modal(document.getElementById("editfollowup"));
+                    myModal.show();
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        });
+    });
+    </script>
 
 </body>
 </html>

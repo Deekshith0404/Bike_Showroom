@@ -329,4 +329,39 @@ public class OwnerRepoImpl implements OwnerRepo {
             }
         }
     }
+
+    @Override
+    public UserReristerEntity getalluserbyname(String name) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("getalluserbyname");
+            query.setParameter("name",name);
+            UserReristerEntity userReristerEntity= (UserReristerEntity) query.getSingleResult();
+
+            return userReristerEntity;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public boolean editfollowupsubmit(FollowUpEntity followUpEntity) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(followUpEntity);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
+        }
+    }
 }
