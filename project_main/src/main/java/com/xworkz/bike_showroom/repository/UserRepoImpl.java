@@ -56,4 +56,61 @@ public class UserRepoImpl implements UserRepo{
          return null;
         }
     }
+
+    @Override
+    public boolean numberexist(long number) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("numberexist");
+            query.setParameter("number",number);
+            Object o=query.getSingleResult();
+            if (o!=null){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return true;
+        }
+    }
+
+    @Override
+    public boolean dlnumber(String dlnum) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("dlnumexist");
+            query.setParameter("dlnum",dlnum);
+            Object o=query.getSingleResult();
+            if (o!=null){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return true;
+        }
+    }
+
+    @Override
+    public boolean nameExist(String name) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("nameexist");
+            query.setParameter("name",name);
+            Object o=query.getSingleResult();
+            if (o!=null){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return true;
+        }
+    }
 }

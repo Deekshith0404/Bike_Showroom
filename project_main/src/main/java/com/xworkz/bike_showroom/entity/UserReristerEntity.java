@@ -11,7 +11,9 @@ import javax.persistence.*;
 @NamedQuery(name = "emailcheck",query = "SELECT COUNT(e.email) FROM UserReristerEntity e WHERE e.email = :email")
 @NamedQuery(name = "getalluser",query = "Select u from UserReristerEntity u")
 @NamedQuery(name = "getalluserbyname",query = "Select u from UserReristerEntity u where u.name =:name")
-
+@NamedQuery(name = "numberexist",query = "select e from UserReristerEntity e where e.phoneNumber =: number")
+@NamedQuery(name = "dlnumexist",query = "select e from UserReristerEntity e where e.dlNumber =: dlnum")
+@NamedQuery(name = "nameexist",query = "select e from UserReristerEntity e where e.name =: name")
 public class UserReristerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

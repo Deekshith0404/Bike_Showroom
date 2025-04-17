@@ -33,4 +33,14 @@ public class OwnerLoginRestController {
         }
 
     }
+
+    @RequestMapping("/valmodel")
+    public String valmodel(@RequestParam("modelname")String modelname){
+        boolean result=ownerService.checkmodelexist(modelname);
+        if (result){
+            return "Model already exist";
+        }else {
+            return "";
+        }
+    }
 }

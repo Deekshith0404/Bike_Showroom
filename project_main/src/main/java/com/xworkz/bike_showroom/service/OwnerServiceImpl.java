@@ -9,7 +9,9 @@ import com.xworkz.bike_showroom.repository.OwnerRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -29,9 +31,14 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public boolean addBranch(BranchDto branchDto) {
+    public boolean addBranch(BranchDto branchDto, Model model) {
         BranchEntity branchEntity=new BranchEntity();
         BeanUtils.copyProperties(branchDto,branchEntity);
+        boolean result=ownerRepo.checkbranchExist(branchDto.getName());
+        if (result){
+            model.addAttribute("result","Branch Name already exist plz change");
+            return false;
+        }
         return ownerRepo.addBranch(branchEntity);
     }
 
@@ -116,5 +123,15 @@ public class OwnerServiceImpl implements OwnerService {
         FollowUpEntity followUp=new FollowUpEntity();
         BeanUtils.copyProperties(followUpDto,followUp);
         return ownerRepo.editfollowupsubmit(followUp);
+    }
+
+    @Override
+    public List<FollowUpEntity> getallbyname(String name) {
+        return ownerRepo.getallbyname(name);
+    }
+
+    @Override
+    public boolean checkmodelexist(String model) {
+        return ownerRepo.checkmodelexist(model);
     }
 }

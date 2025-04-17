@@ -21,4 +21,19 @@ public class UserServiceImpl implements UserService{
     public List<String> getbikeonbranch(String branchid) {
         return userRepo.getbikeonbranch(branchid);
     }
+
+    @Override
+    public boolean numberexist(long number) {
+        return userRepo.numberexist(number);
+    }
+
+    @Override
+    public boolean dlnumber(String dlnum) {
+        return userRepo.dlnumber(dlnum);
+    }
+
+    @Override
+    public boolean nameExist(String name) {
+        return userRepo.nameExist(name);
+    }
 }

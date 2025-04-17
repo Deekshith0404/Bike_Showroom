@@ -5,13 +5,14 @@ import com.xworkz.bike_showroom.dto.BranchDto;
 import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.*;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
 public interface OwnerService {
     OwnerLoginEntity checkemail(String email);
     Boolean addpassword(String email,String password);
-    boolean addBranch(BranchDto branchDto);
+    boolean addBranch(BranchDto branchDto, Model model);
     int usercount();
     int bikecount();
     int branchcount();
@@ -27,6 +28,10 @@ public interface OwnerService {
     List<UserReristerEntity> getalluser();
     UserReristerEntity getalluserbyname(String name);
     boolean editfollowupsubmit(FollowUpDto followUpDto);
+    List<FollowUpEntity> getallbyname(String name);
+    boolean checkmodelexist(String model);
+
+
 
 
 

@@ -441,7 +441,17 @@
             var name=document.getElementById('name').value;
             const patter=/^[A-Z][a-z]*$/;
             if(patter.test(name)){
-                document.getElementById('nameerror').innerHTML="";
+            document.getElementById('nameerror').innerHTML="";
+                    if (name!=="") {
+                         var xhttp = new XMLHttpRequest();
+                         xhttp.open("GET","http://localhost:8081/project_main/valnamereg?name="+name);
+                         xhttp.send();
+
+                         xhttp.onload = function(){
+                         document.getElementById("nameerror").innerHTML = this.responseText;
+                      }
+                  }
+
             }else{
                 document.getElementById('nameerror').innerHTML="invalid pattern start the name with captial letter";
             }
@@ -461,6 +471,15 @@
             const pattern=/^[98]\d{9}$/;
             if(pattern.test(number)){
                    document.getElementById('phoneerror').innerHTML=""
+                   if(number!==""){
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.open("GET","http://localhost:8081/project_main/regnumberVal?number="+number);
+                        xhttp.send();
+
+                        xhttp.onload = function(){
+                            document.getElementById("phoneerror").innerHTML = this.responseText;
+                        }
+                   }
             }else{
                 document.getElementById('phoneerror').innerHTML="invalid number pattern and size must be 10";
             }
@@ -505,8 +524,18 @@
 
 
         function ondlno() {
-            // Add your DL number validation logic here if needed
-        }
+            var dlNumber=document.getElementById('dlno').value;
+
+            if (dlNumber!=="") {
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET","http://localhost:8081/project_main/regdlnum?dlnum="+dlNumber);
+                xhttp.send();
+
+                xhttp.onload = function(){
+                    document.getElementById("dlnoerror").innerHTML = this.responseText;
+                }
+              }
+           }
 
         function onaddress() {
             // Add your address validation logic here if needed

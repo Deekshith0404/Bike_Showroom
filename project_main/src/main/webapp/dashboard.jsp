@@ -200,6 +200,13 @@
         .reslt{
         color:green;
         }
+        table{
+            color:black;
+        }
+        .errorclass{
+            color:red;
+        }
+
     </style>
 </head>
 <body>
@@ -214,8 +221,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="dashboard.jsp">Dashboard</a>
+                        <a class="nav-link active" href="dashboard">Dashboard</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#editfocus">followup</a>
+                    <li>
                     <li class="nav-item">
                         <a class="nav-link" href="startRegister">Register</a>
                     </li>
@@ -365,7 +375,7 @@
         </div>
         <!-- followup page -->
        <div class="row">
-        <div class="col-sm-9 p-3">
+        <div class="col-sm-12 p-3">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span>Follow up</span>
@@ -390,8 +400,10 @@
                                                     <td>${follow.bikeModel}</td>
                                                     <td>${follow.showroom}</td>
                                                     <td>
-                                                       <a href="#" class="btn btn-outline-gold btn-sm editFollowupBtn" data-bs-toggle="modal" data-name="${follow.name}">Edit</a>
-                                                       <a href="followupview?name=${follow.name}" class="btn btn-outline-success btn-sm">View</a>
+                                                       <a href="#" class="btn btn-outline-gold btn-sm editFollowupBtn" style="margin-right:-25px;"  data-bs-toggle="modal" data-name="${follow.name}">Edit</a>
+                                                    </td>
+                                                    <td>
+                                                       <a href="#" class="btn btn-outline-success btn-sm viewFollowupBtn" data-bs-toggle="modal"  data-name="${follow.name}" >View</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -418,11 +430,12 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="bikeName" class="form-label">Bike Name</label>
-                                <input type="text" class="form-control" id="bikeName" name="bikename" placeholder="e.g., Classic 350" required>
+                                <input type="text" class="form-control" id="bikeName" name="bikename"  placeholder="e.g., Classic 350" required>
                             </div>
                             <div class="col-md-6">
+                            <span id="bikererror" class="errorclass"></span><br>
                                  <label for="bikeModel" class="form-label">Model</label>
-                                 <input type="text" class="form-control" id="bikeModel" name="model" placeholder="e.g., Classic 350" required>
+                                 <input type="text" class="form-control" id="bikeModel" name="model" onChange="checkbike()" placeholder="e.g., Classic 350" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -470,7 +483,44 @@
             </div>
         </div>
     </div>
+    <!-- view page for follow up -->
+
+    <div class="modal fade" id="viewfollowup" tabindex="-1" aria-labelledby="viewfollowupLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewfollowupLabel"></i>Follow UP</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+                         <table class="table table-hover" id="followupTable">
+                          <thead style="position: sticky; top: 0; background-color: white; z-index: 1;">
+                             <tr>
+                                   <th>Name</th>
+                                   <th>DATE</th>
+                                   <th>time</th>
+                                   <th>message</th>
+                            </tr>
+                            </thead>
+                             <tbody>
+
+                             </tbody>
+                          </table>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+
+
+
+
+
     <!-- edit the follow up page -->
+    <section id="editfocus">
     <div class="modal fade" id="editfollowup" tabindex="-1" aria-labelledby="editfollowupLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -482,14 +532,14 @@
                         <form action="followupeditsubmit" method="post">
                             <div class="col-mb-6">
                                     <label for="Name" class="form-label"> Name : </label>
-                                    <span id="followupName" name="name" ></span>
+                                    <input type="text" id="followupName" class="form-control" name="name" readonly>
                             </div>
                             <div class="col-md-6">
                                    <label for="status" class="form-label">status : </label>
-                                   <span id="followupData" name="status"></span>
+                                   <input type="text" id="followupData" class="form-control" name="status" readonly>
                             </div>
                                 <div class="col-md-6">
-                                    <label for="bikePrice" class="form-label">Message</label>
+                                    <label for="message" class="form-label">Message</label>
                                     <input type="message" class="form-control" name="message" id="message" required>
                                 </div>
 
@@ -502,6 +552,7 @@
                 </div>
             </div>
     </div>
+    </section>
 
 
     <!-- Add Bike to Showroom Modal -->
@@ -618,8 +669,8 @@
             fetch("http://localhost:8081/project_main/followupedit?name=" + encodeURIComponent(name))
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById("followupName").textContent = data.name;
-                    document.getElementById("followupData").textContent = data.rideOption;
+                    document.getElementById("followupName").value = data.name;
+                    document.getElementById("followupData").value = data.rideOption;
 
                     var myModal = new bootstrap.Modal(document.getElementById("editfollowup"));
                     myModal.show();
@@ -627,6 +678,61 @@
                 .catch(error => console.error("Error fetching data:", error));
         });
     });
+    <!--  script for view btn -->
+     document.querySelectorAll('.viewFollowupBtn').forEach(item => {
+             item.addEventListener('click', function(event) {
+                 event.preventDefault();
+
+                 let name = this.getAttribute('data-name');
+
+                 fetch("http://localhost:8081/project_main/followupview?name=" + encodeURIComponent(name))
+                     .then(response => response.json())
+                     .then(data => {
+                               let tableBody= document.querySelector("#followupTable tbody");
+                                          tableBody.innerHTML="";
+                        data.forEach(user =>{
+
+                            let row = document.createElement("tr");
+                            let cell=document.createElement("td");
+                            cell.textContent=user.name;
+                            row.appendChild(cell);
+                            let cell1=document.createElement("td");
+                            cell1.textContent=user.date;
+                            row.appendChild(cell1)
+
+                            let cell2=document.createElement("td");
+                            cell2.textContent=user.time;
+                            row.appendChild(cell2)
+
+                            let cell3=document.createElement("td");
+                            cell3.textContent=user.message;
+                            row.appendChild(cell3)
+                             tableBody.appendChild(row);
+                        });
+                         var myModal = new bootstrap.Modal(document.getElementById("viewfollowup"));
+                         myModal.show();
+                     })
+                     .catch(error => console.error("Error fetching data:", error));
+             });
+         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        function checkbike(){
+
+        let modelname=document.getElementById("bikeModel").value;
+
+        if(modelname!==""){
+               axios.get('http://localhost:8081/project_main/valmodel?modelname='+modelname)
+                .then(response=>{
+                    document.getElementById("bikererror").innerHTML =response.data;
+                })
+                .catch(error=>{
+                    console.error("the error is",error);
+                });
+        }
+    }
     </script>
 
 </body>

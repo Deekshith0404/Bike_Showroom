@@ -24,5 +24,7 @@ public interface OwnerRepo {
     List<UserReristerEntity> getalluser();
     UserReristerEntity getalluserbyname(String name);
     boolean editfollowupsubmit(FollowUpEntity followUpEntity);
-
+    List<FollowUpEntity> getallbyname(String name);
+    boolean checkbranchExist(String branchName);
+    boolean checkmodelexist(String model);
 }

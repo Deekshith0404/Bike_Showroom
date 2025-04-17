@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -362,6 +363,61 @@ public class OwnerRepoImpl implements OwnerRepo {
             if (entityManager!=null){
                 entityManager.close();
             }
+        }
+    }
+
+    @Override
+    public List<FollowUpEntity> getallbyname(String name) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("getallonname");
+            query.setParameter("name",name);
+            List<FollowUpEntity>  list=query.getResultList();
+            return list;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public boolean checkbranchExist(String branchName) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("existcheck");
+            query.setParameter("branchname",branchName);
+            Object object=query.getSingleResult();
+            if(object!=null){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return true;
+        }
+    }
+
+    @Override
+    public boolean checkmodelexist(String model) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("modelexist");
+            query.setParameter("model",model);
+            Object object=query.getSingleResult();
+            if(object!=null){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return true;
         }
     }
 }

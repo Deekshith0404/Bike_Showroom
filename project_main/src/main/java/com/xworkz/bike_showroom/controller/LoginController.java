@@ -5,6 +5,7 @@ import com.xworkz.bike_showroom.dto.BranchDto;
 import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.BranchEntity;
+import com.xworkz.bike_showroom.entity.FollowUpEntity;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
 import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import com.xworkz.bike_showroom.service.OwnerService;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -37,25 +40,25 @@ public class LoginController {
         OwnerLoginEntity result=ownerLogin.checkemail(email);
         if (result!=null){
             if (result.getPassword().equals(password)){
-                return "dashboard";
+                return this.dashboard(model);
             }else {
                 model.addAttribute("result","password mismatch");
-                return "ownerLogin.jsp";
+                return "ownerLogin";
             }
         }
         model.addAttribute("result","email not exist");
-        return "ownerLogin.jsp";
+        return "ownerLogin";
     }
 
     @RequestMapping("/addbranch")
     public String addnewbranch(BranchDto branchDto,Model model){
-        boolean result=ownerLogin.addBranch(branchDto);
+        boolean result=ownerLogin.addBranch(branchDto,model);
         if (result){
             model.addAttribute("branchresult","Branch added");
         }else {
             model.addAttribute("branchresult","Branch was not able to add");
         }
-        return "dashboard";
+        return this.dashboard(model);
 
     }
 
@@ -69,7 +72,7 @@ public class LoginController {
         model.addAttribute("unSelBike",ownerLogin.unselectedBike());
         model.addAttribute("notfullbranch",ownerLogin.notFullBranch());
         model.addAttribute("followIt",ownerLogin.getalluser());
-        return "dashboard.jsp";
+        return "dashboard";
     }
 
 //    byte[] bytes=regFormDto.getMultipartFile().getBytes();
@@ -111,7 +114,7 @@ public class LoginController {
         }else {
             model.addAttribute("bikeresult","Bike was not able to add");
         }
-        return "dashboard";
+        return this.dashboard(model);
 
     }
 
@@ -119,8 +122,8 @@ public class LoginController {
     public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto){
         userRegisterDto.setUserStatus("Active");
         boolean result= ownerLogin.register(userRegisterDto);
-        followUpDto.setDate(LocalDate.now());
-        followUpDto.setTime(LocalTime.now());
+        followUpDto.setDate(Date.valueOf(LocalDate.now()));
+        followUpDto.setTime(Time.valueOf(LocalTime.now()));
         followUpDto.setMessage("registered");
         followUpDto.setStatus(userRegisterDto.getRideOption());
                         ownerLogin.followUp(followUpDto);
@@ -130,7 +133,7 @@ public class LoginController {
         }else {
             model.addAttribute("result","Registration faild");
         }
-        return "userRegister.jsp";
+        return this.dashboard(model);
     }
     @RequestMapping("/addbiketoshowroom")
     public String addbiketobranch(@RequestParam("branch")String branchId,@RequestParam("bike")String bikeId,Model model){
@@ -142,38 +145,42 @@ public class LoginController {
         }else {
             model.addAttribute("branchresult","bike cannot be added");
         }
-        return "dashboard";
+        return this.dashboard(model);
     }
 
 
     @RequestMapping("/startRegister")
     public String startRegister(Model model){
         model.addAttribute("branchdata",ownerLogin.branchnames());
-        return "userRegister.jsp";
+        return "userRegister";
     }
 
     @RequestMapping("/followupedit")
     @ResponseBody
     public UserReristerEntity followupedit(@RequestParam("name")String name, Model model)
     {
-        System.out.println("-------------------");
         return ownerLogin.getalluserbyname(name);
-
     }
 
     @RequestMapping("/followupeditsubmit")
     public String editfollowup(FollowUpDto followUpDto,Model model){
 
-        followUpDto.setDate(LocalDate.now());
-        followUpDto.setTime(LocalTime.now());
+        followUpDto.setDate(Date.valueOf(LocalDate.now()));
+        followUpDto.setTime(Time.valueOf(LocalTime.now()));
          Boolean result=ownerLogin.editfollowupsubmit(followUpDto);
         if (result){
             model.addAttribute("result","updated successfully");
         }else {
             model.addAttribute("result","update faild !! try again");
         }
-        return "dashboard";
+        return this.dashboard(model);
     }
 
+    @RequestMapping("/followupview")
+    @ResponseBody
+    public List<FollowUpEntity> followupviewall(@RequestParam("name")String name, Model model){
+        List<FollowUpEntity> list=ownerLogin.getallbyname(name);
+        return list;
+    }
 
 }
