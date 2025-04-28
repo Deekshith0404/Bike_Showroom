@@ -134,4 +134,10 @@ public class OwnerServiceImpl implements OwnerService {
     public boolean checkmodelexist(String model) {
         return ownerRepo.checkmodelexist(model);
     }
+
+    @Override
+    public List<BikeEntity> bikes() {
+        return ownerRepo.bikes();
+    }
+
 }

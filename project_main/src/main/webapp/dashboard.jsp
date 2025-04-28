@@ -33,10 +33,6 @@
             padding: 15px 0;
         }
 
-        .navbar-brand img {
-            height: 40px;
-        }
-
         .nav-link {
             color: white !important;
             font-weight: 600;
@@ -213,7 +209,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="dashboard.jsp">
-                <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" style="height: 40px;">
+                <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" style="height: 60px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -342,6 +338,7 @@
                         <button class="btn btn-gold btn-sm" data-bs-toggle="modal" data-bs-target="#addBranchModal">
                             <i class="fas fa-plus"></i> Add Branch
                         </button>
+                        <a href="bikes" class="btn btn-gold btn-sm">Bike</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
@@ -666,7 +663,7 @@
 
             let name = this.getAttribute('data-name');
 
-            fetch("http://localhost:8081/project_main/followupedit?name=" + encodeURIComponent(name))
+            fetch("http://localhost:8090/project_main/followupedit?name=" + encodeURIComponent(name))
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("followupName").value = data.name;
@@ -685,7 +682,7 @@
 
                  let name = this.getAttribute('data-name');
 
-                 fetch("http://localhost:8081/project_main/followupview?name=" + encodeURIComponent(name))
+                 fetch("http://localhost:8090/project_main/followupview?name=" + encodeURIComponent(name))
                      .then(response => response.json())
                      .then(data => {
                                let tableBody= document.querySelector("#followupTable tbody");
@@ -724,7 +721,7 @@
         let modelname=document.getElementById("bikeModel").value;
 
         if(modelname!==""){
-               axios.get('http://localhost:8081/project_main/valmodel?modelname='+modelname)
+               axios.get('http://localhost:8090/project_main/valmodel?modelname='+modelname)
                 .then(response=>{
                     document.getElementById("bikererror").innerHTML =response.data;
                 })

@@ -30,6 +30,7 @@ public interface OwnerService {
     boolean editfollowupsubmit(FollowUpDto followUpDto);
     List<FollowUpEntity> getallbyname(String name);
     boolean checkmodelexist(String model);
+    List<BikeEntity> bikes();
 
 
 

@@ -16,6 +16,7 @@ public class OwnerLoginRestController {
 
     @RequestMapping(value = "/email")
     public String onemail(@RequestParam("email") String email, Model model){
+        System.out.println("hello there");
         OwnerLoginEntity result= ownerService.checkemail(email);
         if (result!=null){
             String password=PasswordGenerator.generatePassword(6);

@@ -72,7 +72,7 @@ public class UserRepoImpl implements UserRepo{
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            return true;
+            return false;
         }
     }
 
@@ -91,7 +91,7 @@ public class UserRepoImpl implements UserRepo{
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            return true;
+            return false;
         }
     }
 
@@ -110,7 +110,7 @@ public class UserRepoImpl implements UserRepo{
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            return true;
+            return false;
         }
     }
 }

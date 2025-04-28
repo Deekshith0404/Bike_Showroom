@@ -420,4 +420,19 @@ public class OwnerRepoImpl implements OwnerRepo {
             return true;
         }
     }
+
+    @Override
+    public List<BikeEntity> bikes() {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try{
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("allbikedata");
+            List<BikeEntity> bike=query.getResultList();
+            return bike;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+
 }

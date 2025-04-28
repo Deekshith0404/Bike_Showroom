@@ -28,7 +28,7 @@
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url('images/bikeimg.jpg');
+                        url('https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -251,7 +251,7 @@
             }
             
             // Simulate OTP sending
-            document.getElementById('emailerror').textContent = 'OTP sent to your email';
+            document.getElementById('emailerror').textContent = '';
             document.getElementById('getOtpLink').style.display = 'none';
             document.getElementById('countdown').style.display = 'block';
             document.getElementById('password').disabled = false;
@@ -262,7 +262,7 @@
             
             // Validate email via AJAX
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "http://localhost:8081/project_main/email?email=" + email);
+            xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
             xhttp.send();
             console.log()
             
@@ -295,7 +295,7 @@
             const email = document.getElementById('email').value;
             if (email !== "") {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", "http://localhost:8081/project_main/email?email=" + email);
+                xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
                 xhttp.send();
                 
                 xhttp.onload = function() {

@@ -4,11 +4,9 @@ import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
 import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
-import com.xworkz.bike_showroom.entity.BranchEntity;
-import com.xworkz.bike_showroom.entity.FollowUpEntity;
-import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
-import com.xworkz.bike_showroom.entity.UserReristerEntity;
+import com.xworkz.bike_showroom.entity.*;
 import com.xworkz.bike_showroom.service.OwnerService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,9 +25,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -182,5 +180,33 @@ public class LoginController {
         List<FollowUpEntity> list=ownerLogin.getallbyname(name);
         return list;
     }
+    @RequestMapping("/bikes")
+    public String bikes(HttpServletResponse response,Model model) throws IOException {
+        List<BikeEntity> list = ownerLogin.bikes();
+        List<String> pic=new ArrayList<>();
+        Iterator<BikeEntity> iter= list.iterator();
+        while (iter.hasNext()){
+            BikeEntity lists=iter.next();
+            lists.getFrontview();
+            response.setContentType("image/jpg");
+            File file=new File("E:\\commons\\"+lists.getFrontview());
+            pic.add(String.valueOf(file));
+            InputStream in=new BufferedInputStream(new FileInputStream(file));
+            ServletOutputStream out = response.getOutputStream();
+           IOUtils.copy(in,out);
+              response.flushBuffer();
+
+        }
+        model.addAttribute("picture",pic);
+         model.addAttribute("bikesList",list);
+         return "bikes";
+    }
 
 }
+//       response.setContentType("image/jpg");
+//File file=new File("E:\\commons\\"+profile);
+//InputStream in=new BufferedInputStream(new FileInputStream(file));
+//ServletOutputStream out = response.getOutputStream();
+//        IOUtils.copy(in,out);
+//        response.flushBuffer();
+

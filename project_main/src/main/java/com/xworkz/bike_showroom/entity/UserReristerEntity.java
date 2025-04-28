@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NamedQuery(name = "numberexist",query = "select e from UserReristerEntity e where e.phoneNumber =: number")
 @NamedQuery(name = "dlnumexist",query = "select e from UserReristerEntity e where e.dlNumber =: dlnum")
 @NamedQuery(name = "nameexist",query = "select e from UserReristerEntity e where e.name =: name")
-public class UserReristerEntity {
+public class UserReristerEntity extends AbstractAuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

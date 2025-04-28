@@ -202,7 +202,7 @@
     <!-- Navbar (from your original code) -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="Royalenfield.com">
                 <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" class="navlogo" width="150">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -444,7 +444,7 @@
             document.getElementById('nameerror').innerHTML="";
                     if (name!=="") {
                          var xhttp = new XMLHttpRequest();
-                         xhttp.open("GET","http://localhost:8081/project_main/valnamereg?name="+name);
+                         xhttp.open("GET","http://localhost:8090/project_main/valnamereg?name="+name);
                          xhttp.send();
 
                          xhttp.onload = function(){
@@ -473,7 +473,7 @@
                    document.getElementById('phoneerror').innerHTML=""
                    if(number!==""){
                         var xhttp = new XMLHttpRequest();
-                        xhttp.open("GET","http://localhost:8081/project_main/regnumberVal?number="+number);
+                        xhttp.open("GET","http://localhost:8090/project_main/regnumberVal?number="+number);
                         xhttp.send();
 
                         xhttp.onload = function(){
@@ -493,7 +493,7 @@
 
             if (emailvalue!=="") {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET","http://localhost:8081/project_main/emailval?email="+emailvalue);
+                xhttp.open("GET","http://localhost:8090/project_main/emailval?email="+emailvalue);
                 xhttp.send();
 
                 xhttp.onload = function(){
@@ -505,7 +505,7 @@
         function fetchBikes() {
           const branchId = document.getElementById('showroom').value;
           const xhr = new XMLHttpRequest();
-          xhr.open("GET", "http://localhost:8081/project_main/getbranchbike?branchname="+branchId);
+          xhr.open("GET", "http://localhost:8090/project_main/getbranchbike?branchname="+branchId);
           xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
               const bikes = JSON.parse(xhr.responseText);
@@ -528,7 +528,7 @@
 
             if (dlNumber!=="") {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET","http://localhost:8081/project_main/regdlnum?dlnum="+dlNumber);
+                xhttp.open("GET","http://localhost:8090/project_main/regdlnum?dlnum="+dlNumber);
                 xhttp.send();
 
                 xhttp.onload = function(){

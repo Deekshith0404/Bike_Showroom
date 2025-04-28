@@ -17,7 +17,7 @@ import java.util.List;
 )
 @NamedQuery(name = "branchname",query = "SELECT p.name FROM BranchEntity p where p.status = 'active'")
 @NamedQuery(name = "existcheck",query = "select p from BranchEntity p where p.name=:branchname")
-public class BranchEntity {
+public class BranchEntity extends AbstractAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

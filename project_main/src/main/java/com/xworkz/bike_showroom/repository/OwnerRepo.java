@@ -27,4 +27,5 @@ public interface OwnerRepo {
     List<FollowUpEntity> getallbyname(String name);
     boolean checkbranchExist(String branchName);
     boolean checkmodelexist(String model);
+    List<BikeEntity> bikes();
 }
