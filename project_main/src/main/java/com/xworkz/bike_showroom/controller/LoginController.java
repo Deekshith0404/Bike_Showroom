@@ -34,46 +34,46 @@ public class LoginController {
     OwnerService ownerLogin;
 
     @RequestMapping("/login")
-    public String login(String email, String password, Model model){
-        OwnerLoginEntity result=ownerLogin.checkemail(email);
-        if (result!=null){
-            if (result.getPassword().equals(password)){
+    public String login(String email, String password, Model model) {
+        OwnerLoginEntity result = ownerLogin.checkemail(email);
+        if (result != null) {
+            if (result.getPassword().equals(password)) {
                 return this.dashboard(model);
-            }else {
-                model.addAttribute("result","password mismatch");
+            } else {
+                model.addAttribute("result", "password mismatch");
                 return "ownerLogin";
             }
         }
-        model.addAttribute("result","email not exist");
+        model.addAttribute("result", "email not exist");
         return "ownerLogin";
     }
 
     @RequestMapping("/addbranch")
-    public String addnewbranch(BranchDto branchDto,Model model){
-        boolean result=ownerLogin.addBranch(branchDto,model);
-        if (result){
-            model.addAttribute("branchresult","Branch added");
-        }else {
-            model.addAttribute("branchresult","Branch was not able to add");
+    public String addnewbranch(BranchDto branchDto, Model model) {
+        boolean result = ownerLogin.addBranch(branchDto, model);
+        if (result) {
+            model.addAttribute("branchresult", "Branch added");
+        } else {
+            model.addAttribute("branchresult", "Branch was not able to add");
         }
         return this.dashboard(model);
 
     }
 
     @RequestMapping("/dashboard")
-    public String dashboard(Model model){
-        model.addAttribute("bike",ownerLogin.bikecount());
-        model.addAttribute("branch",ownerLogin.branchcount());
-        model.addAttribute("user",ownerLogin.usercount());
-        model.addAttribute("branchesList",ownerLogin.allbranchdata());
-        model.addAttribute("justbike",ownerLogin.allbikedata());
-        model.addAttribute("unSelBike",ownerLogin.unselectedBike());
-        model.addAttribute("notfullbranch",ownerLogin.notFullBranch());
-        model.addAttribute("followIt",ownerLogin.getalluser());
+    public String dashboard(Model model) {
+        model.addAttribute("bike", ownerLogin.bikecount());
+        model.addAttribute("branch", ownerLogin.branchcount());
+        model.addAttribute("user", ownerLogin.usercount());
+        model.addAttribute("branchesList", ownerLogin.allbranchdata());
+        model.addAttribute("justbike", ownerLogin.allbikedata());
+        model.addAttribute("unSelBike", ownerLogin.unselectedBike());
+        model.addAttribute("notfullbranch", ownerLogin.notFullBranch());
+        model.addAttribute("followIt", ownerLogin.getalluser());
         return "dashboard";
     }
 
-//    byte[] bytes=regFormDto.getMultipartFile().getBytes();
+    //    byte[] bytes=regFormDto.getMultipartFile().getBytes();
 //    Path path= Paths.get("E:\\commons\\"+regFormDto.getName() +System.currentTimeMillis());
 //        Files.write(path,bytes);
 //    String filename=path.getFileName().toString();
@@ -82,131 +82,122 @@ public class LoginController {
     @RequestMapping("/addbike")
     public String addnewbike(BikeDto bikeDto, Model model) throws IOException {
         System.out.println("---------------------------------------------------------------");
-    byte[] bytes=bikeDto.getFront().getBytes();
-    Path path=Paths.get("E:\\commons\\front\\"+bikeDto.getBikename()+System.currentTimeMillis());
-    Files.write(path,bytes);
-    String frontfile=path.getFileName().toString();
-    bikeDto.setFrontview(frontfile);
+        byte[] bytes = bikeDto.getFront().getBytes();
+        Path path = Paths.get("E:\\commons\\front\\" + bikeDto.getBikename() + System.currentTimeMillis());
+        Files.write(path, bytes);
+        String frontfile = path.getFileName().toString();
+        bikeDto.setFrontview(frontfile);
 
-        byte[] bytes1=bikeDto.getLeft().getBytes();
-        Path path1=Paths.get("E:\\commons\\left\\"+bikeDto.getBikename()+System.currentTimeMillis());
-        Files.write(path1,bytes1);
-        String leftfile=path1.getFileName().toString();
+        byte[] bytes1 = bikeDto.getLeft().getBytes();
+        Path path1 = Paths.get("E:\\commons\\left\\" + bikeDto.getBikename() + System.currentTimeMillis());
+        Files.write(path1, bytes1);
+        String leftfile = path1.getFileName().toString();
         bikeDto.setLeftview(leftfile);
 
-        byte[] bytes2=bikeDto.getRight().getBytes();
-        Path path2=Paths.get("E:\\commons\\right\\"+bikeDto.getBikename()+System.currentTimeMillis());
-        Files.write(path2,bytes2);
-        String rightfile=path2.getFileName().toString();
+        byte[] bytes2 = bikeDto.getRight().getBytes();
+        Path path2 = Paths.get("E:\\commons\\right\\" + bikeDto.getBikename() + System.currentTimeMillis());
+        Files.write(path2, bytes2);
+        String rightfile = path2.getFileName().toString();
         bikeDto.setRightview(rightfile);
 
-        byte[] bytes3=bikeDto.getBack().getBytes();
-        Path path3=Paths.get("E:\\commons\\back\\"+bikeDto.getBikename()+System.currentTimeMillis());
-        Files.write(path3,bytes3);
-        String backfile=path3.getFileName().toString();
+        byte[] bytes3 = bikeDto.getBack().getBytes();
+        Path path3 = Paths.get("E:\\commons\\back\\" + bikeDto.getBikename() + System.currentTimeMillis());
+        Files.write(path3, bytes3);
+        String backfile = path3.getFileName().toString();
         bikeDto.setBackview(backfile);
 
-        boolean result=ownerLogin.addBike(bikeDto);
-        if (result){
-            model.addAttribute("bikeresult","Bike added");
-        }else {
-            model.addAttribute("bikeresult","Bike was not able to add");
+        boolean result = ownerLogin.addBike(bikeDto);
+        if (result) {
+            model.addAttribute("bikeresult", "Bike added");
+        } else {
+            model.addAttribute("bikeresult", "Bike was not able to add");
         }
         return this.dashboard(model);
 
     }
 
     @RequestMapping("/register")
-    public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto){
+    public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto) {
         userRegisterDto.setUserStatus("Active");
-        boolean result= ownerLogin.register(userRegisterDto);
+        boolean result = ownerLogin.register(userRegisterDto);
         followUpDto.setDate(Date.valueOf(LocalDate.now()));
         followUpDto.setTime(Time.valueOf(LocalTime.now()));
         followUpDto.setMessage("registered");
         followUpDto.setStatus(userRegisterDto.getRideOption());
-                        ownerLogin.followUp(followUpDto);
-        if (result){
-            model.addAttribute("result","Registration success!! now Login");
+        ownerLogin.followUp(followUpDto);
+        if (result) {
+            model.addAttribute("result", "Registration success!! now Login");
 
-        }else {
-            model.addAttribute("result","Registration faild");
+        } else {
+            model.addAttribute("result", "Registration faild");
         }
         return this.dashboard(model);
     }
+
     @RequestMapping("/addbiketoshowroom")
-    public String addbiketobranch(@RequestParam("branch")String branchId,@RequestParam("bike")String bikeId,Model model){
-       int  branchid= Integer.parseInt(branchId);
-       int bikeid= Integer.parseInt(bikeId);
-        Boolean result=ownerLogin.addbiketobranch(branchid,bikeid);
-        if (result){
-            model.addAttribute("branchresult","Bike added to branch");
-        }else {
-            model.addAttribute("branchresult","bike cannot be added");
+    public String addbiketobranch(@RequestParam("branch") String branchId, @RequestParam("bike") String bikeId, Model model) {
+        int branchid = Integer.parseInt(branchId);
+        int bikeid = Integer.parseInt(bikeId);
+        Boolean result = ownerLogin.addbiketobranch(branchid, bikeid);
+        if (result) {
+            model.addAttribute("branchresult", "Bike added to branch");
+        } else {
+            model.addAttribute("branchresult", "bike cannot be added");
         }
         return this.dashboard(model);
     }
 
 
     @RequestMapping("/startRegister")
-    public String startRegister(Model model){
-        model.addAttribute("branchdata",ownerLogin.branchnames());
+    public String startRegister(Model model) {
+        model.addAttribute("branchdata", ownerLogin.branchnames());
         return "userRegister";
     }
 
     @RequestMapping("/followupedit")
     @ResponseBody
-    public UserReristerEntity followupedit(@RequestParam("name")String name, Model model)
-    {
+    public UserReristerEntity followupedit(@RequestParam("name") String name, Model model) {
         return ownerLogin.getalluserbyname(name);
     }
 
     @RequestMapping("/followupeditsubmit")
-    public String editfollowup(FollowUpDto followUpDto,Model model){
+    public String editfollowup(FollowUpDto followUpDto, Model model) {
 
         followUpDto.setDate(Date.valueOf(LocalDate.now()));
         followUpDto.setTime(Time.valueOf(LocalTime.now()));
-         Boolean result=ownerLogin.editfollowupsubmit(followUpDto);
-        if (result){
-            model.addAttribute("result","updated successfully");
-        }else {
-            model.addAttribute("result","update faild !! try again");
+        Boolean result = ownerLogin.editfollowupsubmit(followUpDto);
+        if (result) {
+            model.addAttribute("result", "updated successfully");
+        } else {
+            model.addAttribute("result", "update faild !! try again");
         }
         return this.dashboard(model);
     }
 
     @RequestMapping("/followupview")
     @ResponseBody
-    public List<FollowUpEntity> followupviewall(@RequestParam("name")String name, Model model){
-        List<FollowUpEntity> list=ownerLogin.getallbyname(name);
+    public List<FollowUpEntity> followupviewall(@RequestParam("name") String name, Model model) {
+        List<FollowUpEntity> list = ownerLogin.getallbyname(name);
         return list;
     }
-    @RequestMapping("/bikes")
-    public String bikes(HttpServletResponse response,Model model) throws IOException {
-        List<BikeEntity> list = ownerLogin.bikes();
-        List<String> pic=new ArrayList<>();
-        Iterator<BikeEntity> iter= list.iterator();
-        while (iter.hasNext()){
-            BikeEntity lists=iter.next();
-            lists.getFrontview();
-            response.setContentType("image/jpg");
-            File file=new File("E:\\commons\\"+lists.getFrontview());
-            pic.add(String.valueOf(file));
-            InputStream in=new BufferedInputStream(new FileInputStream(file));
-            ServletOutputStream out = response.getOutputStream();
-           IOUtils.copy(in,out);
-              response.flushBuffer();
 
-        }
-        model.addAttribute("picture",pic);
-         model.addAttribute("bikesList",list);
-         return "bikes";
+    @RequestMapping("/bikes")
+    public String bikes( Model model){
+        List<BikeEntity> list = ownerLogin.bikes();
+        model.addAttribute("bikesList", list);
+
+        return "bikes";
+    }
+
+    @RequestMapping("/getpic")
+    public void getpic(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
+            response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\front\\"+imges);
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+
     }
 
 }
-//       response.setContentType("image/jpg");
-//File file=new File("E:\\commons\\"+profile);
-//InputStream in=new BufferedInputStream(new FileInputStream(file));
-//ServletOutputStream out = response.getOutputStream();
-//        IOUtils.copy(in,out);
-//        response.flushBuffer();
-

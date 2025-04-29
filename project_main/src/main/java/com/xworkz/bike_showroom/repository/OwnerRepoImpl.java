@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +67,8 @@ public class OwnerRepoImpl implements OwnerRepo {
     public boolean addBranch(BranchEntity branchEntity) {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
+            branchEntity.setCreatedBy(branchEntity.getManagerName());
+            branchEntity.setCreatedTime(LocalDateTime.now());
             entityManager.getTransaction().begin();
             entityManager.persist(branchEntity);
             entityManager.getTransaction().commit();
@@ -199,6 +203,8 @@ public class OwnerRepoImpl implements OwnerRepo {
     public boolean register(UserReristerEntity userReristerEntity) {
         EntityManager entityManager= entityManagerFactory.createEntityManager();
         try {
+            userReristerEntity.setCreatedBy(userReristerEntity.getName());
+            userReristerEntity.setCreatedTime(LocalDateTime.now());
             entityManager.getTransaction().begin();
             entityManager.persist(userReristerEntity);
             entityManager.getTransaction().commit();
@@ -423,13 +429,27 @@ public class OwnerRepoImpl implements OwnerRepo {
 
     @Override
     public List<BikeEntity> bikes() {
-        EntityManager entityManager= entityManagerFactory.createEntityManager();
-        try{
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
             entityManager.getTransaction().begin();
-            Query query=entityManager.createNamedQuery("allbikedata");
-            List<BikeEntity> bike=query.getResultList();
+            Query query = entityManager.createNamedQuery("allbikedata");
+            List<BikeEntity> bike = query.getResultList();
             return bike;
-        }catch (Exception e){
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
+        }
+    }
+    @Override
+    public BikeEntity bikebyId(int id) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query = entityManager.createNamedQuery("bikebyId");
+            query.setParameter("id",id);
+            BikeEntity bike=(BikeEntity)query.getSingleResult();
+            return bike;
+        } catch (Exception e) {
             log.error(e.getMessage());
             return null;
         }

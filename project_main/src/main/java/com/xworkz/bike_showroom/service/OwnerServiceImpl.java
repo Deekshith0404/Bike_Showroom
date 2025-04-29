@@ -11,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
+
 
     @Autowired
     OwnerRepo ownerRepo;
@@ -138,6 +139,11 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public List<BikeEntity> bikes() {
         return ownerRepo.bikes();
+    }
+
+    @Override
+    public BikeEntity bikebyId(int id) {
+        return ownerRepo.bikebyId(id);
     }
 
 }

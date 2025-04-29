@@ -8,6 +8,7 @@ import com.xworkz.bike_showroom.entity.*;
 import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OwnerService {
     OwnerLoginEntity checkemail(String email);
@@ -31,7 +32,7 @@ public interface OwnerService {
     List<FollowUpEntity> getallbyname(String name);
     boolean checkmodelexist(String model);
     List<BikeEntity> bikes();
-
+    BikeEntity bikebyId(int id);
 
 
 

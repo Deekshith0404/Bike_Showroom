@@ -4,6 +4,8 @@ import com.xworkz.bike_showroom.emailSender.EmailSender;
 import com.xworkz.bike_showroom.entity.OwnerLoginEntity;
 import com.xworkz.bike_showroom.passwordGen.PasswordGenerator;
 import com.xworkz.bike_showroom.service.OwnerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/")
 public class OwnerLoginRestController {
+    private static final Logger log = LoggerFactory.getLogger(OwnerLoginRestController.class);
     @Autowired
     OwnerService ownerService;
 
@@ -20,6 +23,7 @@ public class OwnerLoginRestController {
         OwnerLoginEntity result= ownerService.checkemail(email);
         if (result!=null){
             String password=PasswordGenerator.generatePassword(6);
+            System.out.println(password);
             boolean rest= ownerService.addpassword(email,password);
             System.out.println(rest);
             Boolean result1= EmailSender.emailSender(email,password);

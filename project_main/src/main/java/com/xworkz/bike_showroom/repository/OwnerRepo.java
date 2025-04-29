@@ -28,4 +28,5 @@ public interface OwnerRepo {
     boolean checkbranchExist(String branchName);
     boolean checkmodelexist(String model);
     List<BikeEntity> bikes();
+    BikeEntity bikebyId(int id);
 }
