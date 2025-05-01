@@ -21,4 +21,5 @@ public class UserRegisterDto {
     private String userStatus;
     private String rideDate;
     private String rideTime;
+
 }

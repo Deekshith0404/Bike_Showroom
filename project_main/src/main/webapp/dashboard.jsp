@@ -299,6 +299,7 @@
                         <button class="btn btn-gold btn-sm" data-bs-toggle="modal" data-bs-target="#addBikeModal">
                             <i class="fas fa-plus"></i> Add Bike
                         </button>
+                       <a href="bikes" class="btn btn-gold btn-sm">view Bike</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
@@ -338,7 +339,7 @@
                         <button class="btn btn-gold btn-sm" data-bs-toggle="modal" data-bs-target="#addBranchModal">
                             <i class="fas fa-plus"></i> Add Branch
                         </button>
-                        <a href="bikes" class="btn btn-gold btn-sm">Bike</a>
+                        <a href="branches" class="btn btn-gold btn-sm">View Branches</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
@@ -579,7 +580,7 @@
                                         <select class="form-select" id="showroomBike" name="bike" required>
                                                <option value="">-- Select Bike --</option>
                                                <c:forEach items="${unSelBike}" var="bike">
-                                               <option value="${bike.id}">${bike.bikename}</option>
+                                               <option value="${bike.id}">${bike.model}</option>
                                                  </c:forEach>
                                        </select>
                                 </div>
@@ -605,9 +606,13 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="addbranch" method="post">
+                    <form action="addbranch" method="post" enctype="multipart/form-data">
                     <div class="resultlist">
                     </div>
+                        <div class="mb-3">
+                             <label for="branchName" class="form-label">Branch Name</label>
+                             <input type="file" class="form-control" name="pic" id="file" placeholder="select image" required>
+                        </div>
                         <div class="mb-3">
                             <label for="branchName" class="form-label">Branch Name</label>
                             <input type="text" class="form-control" name="name" id="branchName" placeholder="e.g., Royal Enfield Mumbai Central" required>
@@ -668,7 +673,7 @@
                 .then(data => {
                     document.getElementById("followupName").value = data.name;
                     document.getElementById("followupData").value = data.rideOption;
-
+                       console.log(data.name);
                     var myModal = new bootstrap.Modal(document.getElementById("editfollowup"));
                     myModal.show();
                 })

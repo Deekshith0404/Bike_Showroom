@@ -6,6 +6,7 @@ import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.*;
 import com.xworkz.bike_showroom.service.OwnerService;
+import com.xworkz.bike_showroom.service.UserService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,9 @@ public class LoginController {
     @Autowired
     OwnerService ownerLogin;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping("/login")
     public String login(String email, String password, Model model) {
         OwnerLoginEntity result = ownerLogin.checkemail(email);
@@ -49,9 +53,14 @@ public class LoginController {
     }
 
     @RequestMapping("/addbranch")
-    public String addnewbranch(BranchDto branchDto, Model model) {
+    public String addnewbranch(BranchDto branchDto, Model model) throws IOException {
+        byte[] bytes = branchDto.getPic().getBytes();
+        Path path = Paths.get("E:\\commons\\Branches\\" + branchDto.getName() + System.currentTimeMillis());
+        String frontfile = path.getFileName().toString();
+        branchDto.setProfile(frontfile);
         boolean result = ownerLogin.addBranch(branchDto, model);
         if (result) {
+            Files.write(path, bytes);
             model.addAttribute("branchresult", "Branch added");
         } else {
             model.addAttribute("branchresult", "Branch was not able to add");
@@ -84,30 +93,34 @@ public class LoginController {
         System.out.println("---------------------------------------------------------------");
         byte[] bytes = bikeDto.getFront().getBytes();
         Path path = Paths.get("E:\\commons\\front\\" + bikeDto.getBikename() + System.currentTimeMillis());
-        Files.write(path, bytes);
+
         String frontfile = path.getFileName().toString();
         bikeDto.setFrontview(frontfile);
 
         byte[] bytes1 = bikeDto.getLeft().getBytes();
         Path path1 = Paths.get("E:\\commons\\left\\" + bikeDto.getBikename() + System.currentTimeMillis());
-        Files.write(path1, bytes1);
+
         String leftfile = path1.getFileName().toString();
         bikeDto.setLeftview(leftfile);
 
         byte[] bytes2 = bikeDto.getRight().getBytes();
         Path path2 = Paths.get("E:\\commons\\right\\" + bikeDto.getBikename() + System.currentTimeMillis());
-        Files.write(path2, bytes2);
+
         String rightfile = path2.getFileName().toString();
         bikeDto.setRightview(rightfile);
 
         byte[] bytes3 = bikeDto.getBack().getBytes();
         Path path3 = Paths.get("E:\\commons\\back\\" + bikeDto.getBikename() + System.currentTimeMillis());
-        Files.write(path3, bytes3);
+
         String backfile = path3.getFileName().toString();
         bikeDto.setBackview(backfile);
 
         boolean result = ownerLogin.addBike(bikeDto);
         if (result) {
+            Files.write(path, bytes);
+            Files.write(path1, bytes1);
+            Files.write(path2, bytes2);
+            Files.write(path3, bytes3);
             model.addAttribute("bikeresult", "Bike added");
         } else {
             model.addAttribute("bikeresult", "Bike was not able to add");
@@ -157,6 +170,8 @@ public class LoginController {
     @RequestMapping("/followupedit")
     @ResponseBody
     public UserReristerEntity followupedit(@RequestParam("name") String name, Model model) {
+        System.out.println("===========---------");
+        System.out.println(ownerLogin.getalluserbyname(name));
         return ownerLogin.getalluserbyname(name);
     }
 
@@ -191,7 +206,82 @@ public class LoginController {
 
     @RequestMapping("/getpic")
     public void getpic(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
-            response.setContentType("image/jpg");
+        response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\right\\"+imges);
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+
+    }
+    @RequestMapping("/branches")
+    public String viewbranches(Model model){
+        List<BranchEntity> list=ownerLogin.allbranchdata();
+        model.addAttribute("showroomsList",list);
+        return "showroom";
+    }
+
+    @RequestMapping("/getpicofbranch")
+    public void getpicofbranch(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\Branches\\"+imges);
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+    }
+
+    @PostMapping("/userLogin")
+    public String userlogin(String email,String password,Model model){
+        int result1=userService.login(email,password,model);
+        if (result1==-1){
+            model.addAttribute("email",email);
+            return "setpassword";
+        }else if (result1==1){
+            model.addAttribute("email",email);
+            return viewpagebikes(model);
+        }
+        else {
+            model.addAttribute("email",email);
+            return "login";
+        }
+    }
+
+    @RequestMapping("/updatePassword")
+    public String setpassword(String email,String password,String confirmPassword,Model model){
+        if (password.equals(confirmPassword)){
+            userService.setpassword(email,password);
+            userService.loginrest(email);
+            model.addAttribute("result","password set login now");
+            return "login";
+        }else {
+            model.addAttribute("result","password missmatch");
+            model.addAttribute("email",email);
+            return "setpassword";
+        }
+    }
+
+    @RequestMapping("/viewpage")
+    public String viewpagebikes(Model model){
+        List<BikeEntity> list=ownerLogin.allbikedata();
+        model.addAttribute("bikesList",list);
+        return "viewpage";
+    }
+
+    @RequestMapping("/getpicleft")
+    public void getpicleft(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\left\\"+imges);
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+
+    }
+
+    @RequestMapping("/getpicfront")
+    public void getpicfront(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpg");
         File file=new File("E:\\commons\\front\\"+imges);
         InputStream in=new BufferedInputStream(new FileInputStream(file));
         ServletOutputStream out = response.getOutputStream();
@@ -200,4 +290,15 @@ public class LoginController {
 
     }
 
+
+    @RequestMapping("/getpicback")
+    public void getpicback(@RequestParam("imges")String imges,Model model,HttpServletResponse response) throws IOException {
+        response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\back\\"+imges);
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+
+    }
 }

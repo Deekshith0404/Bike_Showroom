@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.dto;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class BranchDto {
@@ -11,4 +12,6 @@ public class BranchDto {
     private String email;
     private String managerName;
     private String status;
+    private MultipartFile pic;
+    private String profile;
 }

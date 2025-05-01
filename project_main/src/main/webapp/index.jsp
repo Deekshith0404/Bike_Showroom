@@ -320,7 +320,7 @@
                         <a class="nav-link" href="#">Accessories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="login.jsp">Sign in</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="">location</a>

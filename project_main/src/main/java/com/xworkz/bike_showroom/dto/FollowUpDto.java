@@ -13,7 +13,6 @@ import java.time.LocalTime;
 public class FollowUpDto {
     private int id;
     private String name;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
     private Time time;
     private String status;

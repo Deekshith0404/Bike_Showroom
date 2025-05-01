@@ -27,6 +27,7 @@ public class BranchEntity extends AbstractAuditEntity {
     private Long number;
     private String managerName;
     private String status;
+    private String profile;
 
     @OneToMany(mappedBy = "branchEntity")
     private List<BikeEntity> bike = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.xworkz.bike_showroom.repository;
 
+import com.xworkz.bike_showroom.entity.LoginEntity;
+
 import java.util.List;
 
 public interface UserRepo {
@@ -9,4 +11,12 @@ public interface UserRepo {
     boolean dlnumber(String dlnum);
     boolean nameExist(String name);
 
+        LoginEntity login(String email);
+    boolean logincountincrement(String email);
+
+    void timeout(String email);
+
+    void loginrest(String email);
+
+    boolean setpassword(String email, String password);
 }

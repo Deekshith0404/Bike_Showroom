@@ -403,7 +403,7 @@ public class OwnerRepoImpl implements OwnerRepo {
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            return true;
+            return false;
         }
     }
 
@@ -423,7 +423,7 @@ public class OwnerRepoImpl implements OwnerRepo {
             }
         }catch (Exception e){
             log.error(e.getMessage());
-            return true;
+            return false;
         }
     }
 
@@ -452,6 +452,25 @@ public class OwnerRepoImpl implements OwnerRepo {
         } catch (Exception e) {
             log.error(e.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public boolean saveloign(LoginEntity loginEntity) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(loginEntity);
+            entityManager.getTransaction().commit();
+            return true;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
+        }finally {
+            if (entityManager!=null){
+                entityManager.close();
+            }
         }
     }
 

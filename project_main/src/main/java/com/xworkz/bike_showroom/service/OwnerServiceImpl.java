@@ -4,7 +4,9 @@ import com.xworkz.bike_showroom.dto.BikeDto;
 import com.xworkz.bike_showroom.dto.BranchDto;
 import com.xworkz.bike_showroom.dto.FollowUpDto;
 import com.xworkz.bike_showroom.dto.UserRegisterDto;
+import com.xworkz.bike_showroom.emailSender.EmailSender;
 import com.xworkz.bike_showroom.entity.*;
+import com.xworkz.bike_showroom.passwordGen.PasswordGenerator;
 import com.xworkz.bike_showroom.repository.OwnerRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +81,14 @@ public class OwnerServiceImpl implements OwnerService {
     public boolean register(UserRegisterDto userRegisterDto) {
         UserReristerEntity userReristerEntity=new UserReristerEntity();
         BeanUtils.copyProperties(userRegisterDto,userReristerEntity);
+        LoginEntity loginEntity=new LoginEntity();
+        loginEntity.setEmail(userRegisterDto.getEmail());
+        String password=PasswordGenerator.generatePassword(8);
+        loginEntity.setPassword(password);
+        EmailSender.emailSender(userRegisterDto.getEmail(),password);
+        loginEntity.setLogincount(-1);
+
+        ownerRepo.saveloign(loginEntity);
         return ownerRepo.register(userReristerEntity);
     }
 

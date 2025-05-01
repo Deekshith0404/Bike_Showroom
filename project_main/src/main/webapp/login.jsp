@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Royal Enfield | Our Models</title>
+    <title>Royal Enfield | User Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -18,13 +18,29 @@
             --gold: #d4af37;
             --gold-dark: #b38f2a;
             --black: #121212;
+            --cream: #f8f5ee;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #f8f9fa;
             color: var(--black);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
         }
 
         /* Navbar Styles */
@@ -63,111 +79,126 @@
             width: 100%;
         }
 
-        /* Hero Section */
-        .bikes-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url('https://images.pexels.com/photos/326055/pexels-photo-326055.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
-            background-size: cover;
-            background-position: center;
-            padding: 150px 0 100px;
-            text-align: center;
-            color: white;
-            margin-top: 70px;
-        }
-
-        .bikes-hero h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Bike Cards */
-        .bikes-container {
+        /* Login Section */
+        .login-container {
             padding: 80px 0;
-            background-color: white;
-        }
-
-        .bike-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            height: 100%; /* Ensure consistent card height */
-            display: flex;
-            flex-direction: column;
-        }
-        .bike-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* This will fill the container, cropping if needed */
-            transition: transform 0.3s ease;
-        }
-
-        .bike-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            border-color: var(--gold);
-        }
-
-        .bike-img-container {
-            height: 250px;
-            overflow: hidden;
+            margin-top: 70px;
+            flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center;
         }
 
-        .bike-img {
-
-            object-fit: contain; /* Changed from cover to contain to fit entire image */
-            transition: transform 0.3s ease;
+        .login-card {
+            background-color: rgba(248, 245, 238, 0.9);
+            border-radius: 10px;
+            padding: 50px;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .bike-card:hover .bike-img {
-            transform: scale(1.05);
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--gold);
         }
 
-        .bike-info {
-            padding: 25px;
-            flex-grow: 1; /* Make info section fill remaining space */
-            display: flex;
-            flex-direction: column;
-        }
-
-        .bike-title {
-            font-family: 'Playfair Display', serif;
-            color: var(--black);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .bike-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
+        .login-header {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .bike-btn {
+        .login-header img {
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .login-header h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--black);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        .login-header p {
+            color: var(--black);
+            font-size: 1.1rem;
+            margin-top: 20px;
+        }
+
+        .form-control {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25);
+        }
+
+        .login-btn {
             background-color: var(--gold);
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 25px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
             width: 100%;
-            margin-top: auto; /* Push button to bottom */
+            margin-top: 20px;
+            border-radius: 4px;
         }
 
-        .bike-btn:hover {
+        .login-btn:hover {
             background-color: var(--gold-dark);
-            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a,
+        .register-link a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .forgot-password a:hover,
+        .register-link a:hover {
+            color: var(--gold-dark);
+            text-decoration: underline;
         }
 
         /* Footer Styles */
@@ -176,7 +207,6 @@
             color: white;
             border-top: 1px solid var(--gold);
             padding: 20px 0;
-            margin-top: 50px;
         }
 
         .footer-links a {
@@ -187,7 +217,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--gol    d);
+            color: var(--gold);
         }
 
         .social-icons a {
@@ -203,31 +233,37 @@
 
         .copyright {
             margin-top: 20px;
+            font-size: 0.9rem;
         }
 
         /* Responsive Styles */
         @media (max-width: 768px) {
-            .bikes-hero {
-                padding: 120px 0 60px;
+            .login-container {
+                padding: 40px 20px;
                 margin-top: 60px;
             }
 
-            .bikes-hero h1 {
-                font-size: 2.5rem;
+            .login-card {
+                padding: 30px;
             }
 
-            .bike-img-container {
-                height: 200px;
+            .login-header h1 {
+                font-size: 2rem;
             }
 
-            .nav-link {
-                margin: 5px 0;
+            .form-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
             }
+        }
+        #emailerror{
+            color:red;
         }
     </style>
 </head>
 <body>
-    <!-- Updated Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.jsp">
@@ -242,10 +278,10 @@
                         <a class="nav-link" href="index.jsp">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="bikes.jsp">Models</a>
+                        <a class="nav-link" href="bikes.jsp">Models</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
+                        <a class="nav-link active" href="#">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Services</a>
@@ -261,45 +297,40 @@
         </div>
     </nav>
 
-    <!-- Bikes Hero Section -->
-    <section class="bikes-hero">
+    <!-- Login Form -->
+    <div class="login-container">
         <div class="container">
-            <h1>Our Motorcycles</h1>
-            <p>Discover the perfect Royal Enfield for your riding style</p>
-        </div>
-    </section>
-
-    <!-- Bikes Listing -->
-    <section class="bikes-container">
-        <div class="container">
-            <div class="row">
-                <!-- This for loop will iterate through the bikesList from your database -->
-                <c:forEach items="${bikesList}" var="bike">
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="bike-card">
-                            <!-- Bike Image from database -->
-                            <div class="bike-img-container">
-                                <img src="getpic?imges=${bike.rightview}" alt="${bike.model}" class="bike-img" >
-                            </div>
-                            <div class="bike-info">
-                                <h3 class="bike-title">${bike.model}</h3>
-                                <!-- Bike Details from database -->
-                                <p><strong>Engine:</strong> ${bike.cc} cc</p>
-                                <p><strong>Mileage:</strong> ${bike.milage} kmpl</p>
-                                <p><strong>Colors:</strong> ${bike.color}</p>
-                                <div class="bike-price">Rs: ${bike.price}</div>
-                            </div>
-                        </div>
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Rider Login</h1>
+                </div>
+                <span id="header">${result}</span>
+                <form action="userLogin" method="post">
+                    <div class="mb-3">
+                    <span id="emailerror"></span><br>
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" onChange="loginemail()" required placeholder="Enter your registered email">
                     </div>
-                </c:forEach>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password">
+                    </div>
+
+                    <button type="submit" class="btn login-btn">Sign In</button>
+                    <div class="form-footer">
+                        <div class="forgot-password">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Updated Footer -->
+    <!-- Footer -->
     <footer>
         <div class="container text-center">
-            <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" class="mb-3" style="height: 60px;">
             <div class="footer-links mb-3">
                 <a href="#">About Us</a>
                 <a href="#">Our Heritage</a>
@@ -331,6 +362,19 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        function loginemail() {
+                    const email = document.getElementById('email').value;
+                    if (email !== "") {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.open("GET", "http://localhost:8090/project_main/loginemail?email=" + email);
+                        xhttp.send();
+
+                        xhttp.onload = function() {
+                            document.getElementById("emailerror").innerHTML = this.responseText;
+                        }
+                    }
+                }
     </script>
 </body>
 </html>

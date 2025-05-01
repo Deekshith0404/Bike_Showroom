@@ -29,4 +29,5 @@ public interface OwnerRepo {
     boolean checkmodelexist(String model);
     List<BikeEntity> bikes();
     BikeEntity bikebyId(int id);
+    boolean saveloign(LoginEntity loginEntity);
 }

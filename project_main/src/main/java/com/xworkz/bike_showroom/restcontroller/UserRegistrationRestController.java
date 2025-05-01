@@ -66,7 +66,12 @@ public class UserRegistrationRestController {
         }
     }
 
-
-
-
+    @GetMapping("/loginemail")
+    public String loginmailexist(@RequestParam("email")String email){
+            Long result=userService.emailoccurence(email);
+            if (result!=0){
+                return "";
+            }
+            return "Email not exist! contact Admin";
+    }
 }

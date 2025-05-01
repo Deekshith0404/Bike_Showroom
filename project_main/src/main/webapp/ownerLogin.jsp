@@ -17,7 +17,7 @@
             --gold-dark: #b38f2a;
             --black: #121212;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -213,71 +213,71 @@
     <div class="login-container">
         <h2 class="login-title">Owner Login</h2>
         <span class="result">${result}</span>
-        
+
         <form id="loginForm" action="login">
             <div class="mb-3">
                 <input type="email" class="form-control-custom" id="email" name="email" placeholder="Email" required>
                 <span id="emailerror" class="error-message"></span>
             </div>
-            
+
             <div class="mb-3">
                 <a id="getOtpLink" class="otp-link" onclick="sendOtp()">Get OTP</a>
                 <div id="countdown" class="countdown">OTP valid for: 02:00</div>
             </div>sendOtp
-            
+
             <div class="mb-3">
                 <input type="password" class="form-control-custom" id="password" name="password" placeholder="Password" required disabled>
             </div>
-            
+
             <button type="submit" class="btn btn-gold" id="submitBtn" disabled>Login</button>
         </form>
-        
+
         <p class="toggle-link">Don't have an account? <a href="Owner.jsp">Register here</a></p>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+
     <script>
         // OTP Countdown Timer
         let timer;
         let timeLeft = 120; // 2 minutes in seconds
-        
+
         function sendOtp() {
             const email = document.getElementById('email').value;
             if (!email) {
                 document.getElementById('emailerror').textContent = 'Please enter email first';
                 return;
             }
-            
+
             // Simulate OTP sending
             document.getElementById('emailerror').textContent = '';
             document.getElementById('getOtpLink').style.display = 'none';
             document.getElementById('countdown').style.display = 'block';
             document.getElementById('password').disabled = false;
             document.getElementById('submitBtn').disabled = false;
-            
+
             // Start countdown
             timer = setInterval(updateCountdown, 1000);
-            
+
             // Validate email via AJAX
             var xhttp = new XMLHttpRequest();
             xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
             xhttp.send();
             console.log()
-            
+
             xhttp.onload = function() {
                 document.getElementById("emailerror").innerHTML = this.responseText;
             }
         }
-        
+
         function updateCountdown() {
             const minutes = Math.floor(timeLeft / 60);
             let seconds = timeLeft % 60;
             seconds = seconds < 10 ? '0' + seconds : seconds;
-            
+
             document.getElementById('countdown').textContent = `OTP valid for: ${minutes}:${seconds}`;
-            
+
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 document.getElementById('countdown').textContent = 'OTP expired!';
@@ -289,7 +289,7 @@
                 timeLeft--;
             }
         }
-        
+
 
         function onemail() {
             const email = document.getElementById('email').value;
@@ -297,7 +297,7 @@
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
                 xhttp.send();
-                
+
                 xhttp.onload = function() {
                     document.getElementById("emailerror").innerHTML = this.responseText;
                 }
