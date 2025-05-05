@@ -617,39 +617,39 @@
                                 <div class="bike-price">Rs: ${bike.price}</div>
                                 <div class="bike-actions">
                                     <a href="#" class="bike-btn">Book Now</a>
-                                    <button class="bike-btn secondary" data-bs-toggle="modal" data-bs-target="#bikeModal${loop.index}">Details</button>
+                                    <button class="bike-btn secondary" onclick="initModal('modal${loop.index}')" data-bs-toggle="modal" data-bs-target="#modal${loop.index}">Details</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Bike Details Modal -->
-                    <div class="modal fade bike-modal" id="bikeModal${loop.index}" tabindex="-1" aria-labelledby="bikeModalLabel${loop.index}" aria-hidden="true">
+                    <div class="modal fade bike-modal" id="modal${loop.index}" tabindex="-1" aria-labelledby="modalLabel${loop.index}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="bikeModalLabel${loop.index}">${bike.model}</h5>
+                                    <h5 class="modal-title" id="modalLabel${loop.index}">${bike.model}</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="image-container">
-                                        <div class="image-slider">
+                                        <div class="image-slider" id="slider${loop.index}">
                                             <img src="getpicleft?imges=${bike.leftview}" alt="${bike.model} - Left View" class="modal-image active">
                                             <img src="getpic?imges=${bike.rightview}" alt="${bike.model} - Right View" class="modal-image">
                                             <img src="getpicfront?imges=${bike.frontview}" alt="${bike.model} - Front View" class="modal-image">
                                             <img src="getpicback?imges=${bike.backview}" alt="${bike.model} - Back View" class="modal-image">
                                         </div>
-                                        <div class="nav-arrow left" onclick="changeImage(${loop.index}, -1)">
+                                        <div class="nav-arrow left" onclick="prevImage('slider${loop.index}')">
                                             <i class="fas fa-chevron-left"></i>
                                         </div>
-                                        <div class="nav-arrow right" onclick="changeImage(${loop.index}, 1)">
+                                        <div class="nav-arrow right" onclick="nextImage('slider${loop.index}')">
                                             <i class="fas fa-chevron-right"></i>
                                         </div>
                                         <div class="image-dots">
-                                            <span class="image-dot active" onclick="showImage(${loop.index}, 0)"></span>
-                                            <span class="image-dot" onclick="showImage(${loop.index}, 1)"></span>
-                                            <span class="image-dot" onclick="showImage(${loop.index}, 2)"></span>
-                                            <span class="image-dot" onclick="showImage(${loop.index}, 3)"></span>
+                                            <span class="image-dot active" onclick="jumpToImage('slider${loop.index}', 0)"></span>
+                                            <span class="image-dot" onclick="jumpToImage('slider${loop.index}', 1)"></span>
+                                            <span class="image-dot" onclick="jumpToImage('slider${loop.index}', 2)"></span>
+                                            <span class="image-dot" onclick="jumpToImage('slider${loop.index}', 3)"></span>
                                         </div>
                                     </div>
                                     <div class="info-container">
@@ -719,105 +719,102 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+     <script>
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Initialize modal with images
+            function initModal(modalId) {
+                const modal = document.getElementById(modalId);
+                const images = modal.querySelectorAll('.modal-image');
+                const dots = modal.querySelectorAll('.image-dot');
+
+                // Reset all images and dots
+                images.forEach(img => img.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                // Activate first image and dot
+                if (images.length > 0) images[0].classList.add('active');
+                if (dots.length > 0) dots[0].classList.add('active');
             }
-        });
 
-        // Pause animation when hovering over bike card
-        document.querySelectorAll('.bike-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.querySelector('.bike-img-slider').style.animationPlayState = 'running';
-            });
+            // Show gallery for bike card
+            function showGallery(index) {
+                const modal = new bootstrap.Modal(document.getElementById(`modal${index}`));
+                initModal(`modal${index}`);
+                modal.show();
+            }
 
-            card.addEventListener('mouseleave', function() {
-                this.querySelector('.bike-img-slider').style.animationPlayState = 'paused';
-                this.querySelector('.bike-img-slider').style.transform = 'translateX(0)';
-            });
-        });
+            // Image slider functions
+            function prevImage(sliderId) {
+                const slider = document.getElementById(sliderId);
+                const images = slider.querySelectorAll('.modal-image');
+                const dots = slider.parentElement.querySelectorAll('.image-dot');
 
-        // Track current modal and image state
-        const modalStates = {};
-
-        // Initialize modals when shown
-        document.querySelectorAll('.bike-modal').forEach((modal, index) => {
-            modal.addEventListener('show.bs.modal', function() {
-                // Initialize state for this modal
-                modalStates[index] = { currentIndex: 0 };
-
-                // Get all images and dots for this modal
-                const images = this.querySelectorAll('.modal-image');
-                const dots = this.querySelectorAll('.image-dot');
-
-                // Hide all images except first
-                images.forEach((img, i) => {
-                    img.classList.toggle('active', i === 0);
+                let currentIndex = 0;
+                images.forEach((img, index) => {
+                    if (img.classList.contains('active')) {
+                        currentIndex = index;
+                        img.classList.remove('active');
+                        dots[index].classList.remove('active');
+                    }
                 });
 
-                // Reset dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === 0);
+                const newIndex = (currentIndex - 1 + images.length) % images.length;
+                images[newIndex].classList.add('active');
+                dots[newIndex].classList.add('active');
+            }
+
+            function nextImage(sliderId) {
+                const slider = document.getElementById(sliderId);
+                const images = slider.querySelectorAll('.modal-image');
+                const dots = slider.parentElement.querySelectorAll('.image-dot');
+
+                let currentIndex = 0;
+                images.forEach((img, index) => {
+                    if (img.classList.contains('active')) {
+                        currentIndex = index;
+                        img.classList.remove('active');
+                        dots[index].classList.remove('active');
+                    }
                 });
-            });
-        });
 
-        // Change image by direction (-1 for previous, 1 for next)
-        function changeImage(modalIndex, direction) {
-            const modal = document.getElementById(`bikeModal${modalIndex}`);
-            if (!modal) return;
-
-            const images = modal.querySelectorAll('.modal-image');
-            const dots = modal.querySelectorAll('.image-dot');
-            if (images.length === 0) return;
-
-            // Initialize state if not exists
-            if (!modalStates[modalIndex]) {
-                modalStates[modalIndex] = { currentIndex: 0 };
+                const newIndex = (currentIndex + 1) % images.length;
+                images[newIndex].classList.add('active');
+                dots[newIndex].classList.add('active');
             }
 
-            // Hide current image
-            images[modalStates[modalIndex].currentIndex].classList.remove('active');
-            dots[modalStates[modalIndex].currentIndex].classList.remove('active');
+            function jumpToImage(sliderId, index) {
+                const slider = document.getElementById(sliderId);
+                const images = slider.querySelectorAll('.modal-image');
+                const dots = slider.parentElement.querySelectorAll('.image-dot');
 
-            // Calculate new index with wrap-around
-            modalStates[modalIndex].currentIndex =
-                (modalStates[modalIndex].currentIndex + direction + images.length) % images.length;
+                if (index >= 0 && index < images.length) {
+                    images.forEach(img => img.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
 
-            // Show new image
-            images[modalStates[modalIndex].currentIndex].classList.add('active');
-            dots[modalStates[modalIndex].currentIndex].classList.add('active');
-        }
-
-        // Show specific image by index
-        function showImage(modalIndex, imageIndex) {
-            const modal = document.getElementById(`bikeModal${modalIndex}`);
-            if (!modal) return;
-
-            const images = modal.querySelectorAll('.modal-image');
-            const dots = modal.querySelectorAll('.image-dot');
-
-            if (imageIndex < 0 || imageIndex >= images.length) return;
-
-            // Initialize state if not exists
-            if (!modalStates[modalIndex]) {
-                modalStates[modalIndex] = { currentIndex: 0 };
+                    images[index].classList.add('active');
+                    dots[index].classList.add('active');
+                }
             }
+        </script>
 
-            // Hide current image
-            images[modalStates[modalIndex].currentIndex].classList.remove('active');
-            dots[modalStates[modalIndex].currentIndex].classList.remove('active');
-
-            // Update to new image
-            modalStates[modalIndex].currentIndex = imageIndex;
-            images[imageIndex].classList.add('active');
-            dots[imageIndex].classList.add('active');
-        }
-    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
