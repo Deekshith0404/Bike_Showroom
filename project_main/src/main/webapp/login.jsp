@@ -367,7 +367,7 @@
                     const email = document.getElementById('email').value;
                     if (email !== "") {
                         var xhttp = new XMLHttpRequest();
-                        xhttp.open("GET", "http://localhost:8090/project_main/loginemail?email=" + email);
+                        xhttp.open("GET", "http://localhost:8095/project_main/loginemail?email=" + email);
                         xhttp.send();
 
                         xhttp.onload = function() {

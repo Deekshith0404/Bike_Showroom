@@ -156,4 +156,9 @@ public class OwnerServiceImpl implements OwnerService {
         return ownerRepo.bikebyId(id);
     }
 
+    @Override
+    public boolean deletebranchByid(String name) {
+        return ownerRepo.deletebranchbyname(name);
+    }
+
 }

@@ -474,4 +474,22 @@ public class OwnerRepoImpl implements OwnerRepo {
         }
     }
 
+    @Override
+    public boolean deletebranchbyname(String name) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("deletebranch");
+            query.setParameter("name",name);
+            int result=query.executeUpdate();
+            if (result>=1){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return false;
+        }
+    }
+
 }

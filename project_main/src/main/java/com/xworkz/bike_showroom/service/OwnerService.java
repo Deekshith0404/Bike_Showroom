@@ -35,7 +35,5 @@ public interface OwnerService {
     BikeEntity bikebyId(int id);
 
 
-
-
-
+    boolean deletebranchByid(String name);
 }

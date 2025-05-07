@@ -360,7 +360,7 @@
                                             <td><span class="status-badge ${branch.status == 'active' ? 'status-active' : 'status-inactive'}">${branch.status}</span></td>
                                             <td>
                                                 <a href="branchEdit?name=${branch.name}" class="btn btn-outline-gold btn-sm" >Edit</a>
-                                                <a href="branchDelete?name=${branch.name}" class="btn btn-outline-danger btn-sm">delete</a>
+                                                <a href="#" class="btn btn-outline-danger btn-sm branchDeleteBtn" style="margin-right:-25px;"  data-bs-toggle="modal" data-name="${branch.name}">Delete</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -371,6 +371,31 @@
                 </div>
             </div>
         </div>
+        <!-- delete branch -->
+        <div class="modal fade" id="Deletebike" tabindex="-1" aria-labelledby="Deletebike" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deletebranch"><i class="fas fa-trash"></i></i>Delete Branch</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="deletebyid">
+                            <div class="col-md-6">
+                                    <label>Are you sure you want to delete!</label><br>
+                                    <span id="rname"></span>
+                            </div>
+                                <div class="modal-footer">
+                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                       <a href="#" class="btn btn-outline-danger btn-sm deleteingbranchBtn" style="margin-right:-25px;"  data-bs-toggle="modal">Delete</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
         <!-- followup page -->
        <div class="row">
         <div class="col-sm-12 p-3">
@@ -511,11 +536,6 @@
                     </div>
                 </div>
     </div>
-
-
-
-
-
 
     <!-- edit the follow up page -->
     <section id="editfocus">
@@ -668,7 +688,7 @@
 
             let name = this.getAttribute('data-name');
 
-            fetch("http://localhost:8090/project_main/followupedit?name=" + encodeURIComponent(name))
+            fetch("http://localhost:8095/project_main/followupedit?name=" + encodeURIComponent(name))
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById("followupName").value = data.name;
@@ -687,7 +707,7 @@
 
                  let name = this.getAttribute('data-name');
 
-                 fetch("http://localhost:8090/project_main/followupview?name=" + encodeURIComponent(name))
+                 fetch("http://localhost:8095/project_main/followupview?name=" + encodeURIComponent(name))
                      .then(response => response.json())
                      .then(data => {
                                let tableBody= document.querySelector("#followupTable tbody");
@@ -726,7 +746,7 @@
         let modelname=document.getElementById("bikeModel").value;
 
         if(modelname!==""){
-               axios.get('http://localhost:8090/project_main/valmodel?modelname='+modelname)
+               axios.get('http://localhost:8095/project_main/valmodel?modelname='+modelname)
                 .then(response=>{
                     document.getElementById("bikererror").innerHTML =response.data;
                 })
@@ -735,6 +755,34 @@
                 });
         }
     }
+    <!-- delete branch-->
+
+
+    document.querySelectorAll('.branchDeleteBtn').forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
+
+                let name = this.getAttribute('data-name');
+                console.log(name);
+                document.getElementById("rname").innerText =name;
+                var myModal = new bootstrap.Modal(document.getElementById("Deletebike"));
+                myModal.show();
+           });
+        });
+    </script>
+    <script>
+
+            <!-- deleting it -->
+            document.querySelectorAll('.deleteingbranchBtn').forEach(item => {
+                        item.addEventListener('click', function(event) {
+                            event.preventDefault();
+            let name = document.getElementById("rname").innerText;
+
+            if(name!==""){
+                           axios.get('http://localhost:8095/project_main/deletebranch?name='+name)
+                           }
+                       });
+                    });
     </script>
 
 </body>

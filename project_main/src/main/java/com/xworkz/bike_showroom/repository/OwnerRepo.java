@@ -30,4 +30,6 @@ public interface OwnerRepo {
     List<BikeEntity> bikes();
     BikeEntity bikebyId(int id);
     boolean saveloign(LoginEntity loginEntity);
+
+    boolean deletebranchbyname(String name);
 }

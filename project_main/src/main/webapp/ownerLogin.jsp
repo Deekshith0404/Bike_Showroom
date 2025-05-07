@@ -262,7 +262,7 @@
 
             // Validate email via AJAX
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
+            xhttp.open("GET", "http://localhost:8095/project_main/email?email=" + email);
             xhttp.send();
             console.log()
 
@@ -295,7 +295,7 @@
             const email = document.getElementById('email').value;
             if (email !== "") {
                 var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", "http://localhost:8090/project_main/email?email=" + email);
+                xhttp.open("GET", "http://localhost:8095/project_main/email?email=" + email);
                 xhttp.send();
 
                 xhttp.onload = function() {

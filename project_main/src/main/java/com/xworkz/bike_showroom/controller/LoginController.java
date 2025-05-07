@@ -301,4 +301,16 @@ public class LoginController {
         response.flushBuffer();
 
     }
+
+    @RequestMapping("/deletebranch")
+    public String deletebranch(@RequestParam("name")String name,Model model){
+        System.out.println(name);
+        boolean result=ownerLogin.deletebranchByid(name);
+        if (result){
+            model.addAttribute("result","Deleted successfully");
+        }else {
+            model.addAttribute("result","not able to delete try again!");
+        }
+        return dashboard(model);
+    }
 }
