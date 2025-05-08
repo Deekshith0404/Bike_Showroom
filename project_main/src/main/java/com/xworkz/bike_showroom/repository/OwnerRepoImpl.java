@@ -482,6 +482,7 @@ public class OwnerRepoImpl implements OwnerRepo {
             Query query=entityManager.createNamedQuery("deletebranch");
             query.setParameter("name",name);
             int result=query.executeUpdate();
+            entityManager.getTransaction().commit();
             if (result>=1){
                 return true;
             }
@@ -491,5 +492,4 @@ public class OwnerRepoImpl implements OwnerRepo {
             return false;
         }
     }
-
 }

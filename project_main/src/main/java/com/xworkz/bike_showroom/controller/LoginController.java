@@ -71,6 +71,7 @@ public class LoginController {
 
     @RequestMapping("/dashboard")
     public String dashboard(Model model) {
+        System.out.println("-----------------------------");
         model.addAttribute("bike", ownerLogin.bikecount());
         model.addAttribute("branch", ownerLogin.branchcount());
         model.addAttribute("user", ownerLogin.usercount());
@@ -304,13 +305,11 @@ public class LoginController {
 
     @RequestMapping("/deletebranch")
     public String deletebranch(@RequestParam("name")String name,Model model){
-        System.out.println(name);
+        System.out.println("deletebranch :"+name);
         boolean result=ownerLogin.deletebranchByid(name);
         if (result){
             model.addAttribute("result","Deleted successfully");
-        }else {
-            model.addAttribute("result","not able to delete try again!");
         }
-        return dashboard(model);
+        return "dashboard";
     }
 }
