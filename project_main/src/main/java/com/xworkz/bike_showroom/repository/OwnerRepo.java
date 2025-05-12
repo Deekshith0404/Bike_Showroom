@@ -32,4 +32,6 @@ public interface OwnerRepo {
     boolean saveloign(LoginEntity loginEntity);
 
     boolean deletebranchbyname(String name);
+
+    boolean deletebikebymodel(String name);
 }

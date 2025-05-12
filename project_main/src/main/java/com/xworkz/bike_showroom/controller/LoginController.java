@@ -303,12 +303,17 @@ public class LoginController {
 
     }
 
-    @RequestMapping("/deletebranch")
-    public String deletebranch(@RequestParam("name")String name,Model model){
-        System.out.println("deletebranch :"+name);
-        boolean result=ownerLogin.deletebranchByid(name);
+
+
+
+    @RequestMapping("/deletebike")
+    public String deletebike(@RequestParam("name")String name,Model model){
+        System.out.println("deletebike :"+name);
+        boolean result=ownerLogin.deletebikeBymodel(name);
         if (result){
             model.addAttribute("result","Deleted successfully");
+        }else {
+            model.addAttribute("result","cannot delete");
         }
         return "dashboard";
     }

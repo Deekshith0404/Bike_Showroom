@@ -492,4 +492,23 @@ public class OwnerRepoImpl implements OwnerRepo {
             return false;
         }
     }
+
+    @Override
+    public boolean deletebikebymodel(String name) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("deletebike");
+            query.setParameter("model",name);
+            int result=query.executeUpdate();
+            entityManager.getTransaction().commit();
+            if (result>=1){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return false;
+        }
+    }
 }

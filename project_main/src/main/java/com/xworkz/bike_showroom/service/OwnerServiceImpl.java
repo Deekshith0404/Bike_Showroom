@@ -85,7 +85,8 @@ public class OwnerServiceImpl implements OwnerService {
         loginEntity.setEmail(userRegisterDto.getEmail());
         String password=PasswordGenerator.generatePassword(8);
         loginEntity.setPassword(password);
-        EmailSender.emailSender(userRegisterDto.getEmail(),password);
+        boolean result=EmailSender.emailSender(userRegisterDto.getEmail(),password);
+        System.out.println(result);
         loginEntity.setLogincount(-1);
 
         ownerRepo.saveloign(loginEntity);
@@ -159,6 +160,11 @@ public class OwnerServiceImpl implements OwnerService {
     @Override
     public boolean deletebranchByid(String name) {
         return ownerRepo.deletebranchbyname(name);
+    }
+
+    @Override
+    public boolean deletebikeBymodel(String name) {
+        return ownerRepo.deletebikebymodel(name);
     }
 
 }

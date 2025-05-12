@@ -36,4 +36,6 @@ public interface OwnerService {
 
 
     boolean deletebranchByid(String name);
+
+    boolean deletebikeBymodel(String name);
 }

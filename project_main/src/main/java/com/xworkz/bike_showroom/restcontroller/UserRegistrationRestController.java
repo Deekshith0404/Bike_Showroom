@@ -30,7 +30,7 @@ public class UserRegistrationRestController {
     @RequestMapping(value = "/getbranchbike")
     @ResponseBody
     public List<String> getbikeonbranch(@RequestParam("branchname") String branchname){
-        System.out.println("hitting the rest or getbranchbike");
+        System.out.println("hitting the rest or getbranchbike"+branchname);
         List<String> bikes=  userService.getbikeonbranch(branchname);
         System.out.println(bikes);
         return bikes;

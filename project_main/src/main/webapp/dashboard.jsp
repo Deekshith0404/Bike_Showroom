@@ -319,9 +319,7 @@
                                             <td>${bike.bikename}</td>
                                             <td>${bike.cc}</span></td>
                                             <td>
-                                                <a href="edit?id=${bike.model}" class="btn btn-outline-gold btn-sm">Edit</a>
-                                                <a href="edit?id=${follow.name}" class="btn btn-outline-danger btn-sm">Delete</a>
-
+                                                <a href="#" class="btn btn-outline-danger btn-sm bikeDeleteBtn" style="margin-right:-25px;"  data-bs-toggle="modal" data-name="${bike.model}">Delete</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -331,6 +329,31 @@
                     </div>
                 </div>
             </div>
+            <!-- bike delete -->
+            <div class="modal fade" id="Deletebike" tabindex="-1" aria-labelledby="Deletebike" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="Deletebike"><i class="fas fa-trash"></i></i>Delete Bike</h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="deletebikebyid">
+                                        <div class="col-md-6">
+                                                <label>Are you sure you want to delete!</label><br>
+                                                <span id="bname"></span>
+                                        </div>
+                                            <div class="modal-footer">
+                                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                   <a href="#" class="btn btn-outline-danger btn-sm deleteingbikeBtn" style="margin-right:-25px;"  data-bs-toggle="modal">Delete</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+
             <!-- Branches Section -->
             <div class="col-md-6">
                 <div class="card">
@@ -359,7 +382,6 @@
                                             <td>${branch.location}</td>
                                             <td><span class="status-badge ${branch.status == 'active' ? 'status-active' : 'status-inactive'}">${branch.status}</span></td>
                                             <td>
-                                                <a href="branchEdit?name=${branch.name}" class="btn btn-outline-gold btn-sm" >Edit</a>
                                                 <a href="#" class="btn btn-outline-danger btn-sm branchDeleteBtn" style="margin-right:-25px;"  data-bs-toggle="modal" data-name="${branch.name}">Delete</a>
                                             </td>
                                         </tr>
@@ -372,7 +394,7 @@
             </div>
         </div>
         <!-- delete branch -->
-        <div class="modal fade" id="Deletebike" tabindex="-1" aria-labelledby="Deletebike" aria-hidden="true">
+        <div class="modal fade" id="Deletebranch" tabindex="-1" aria-labelledby="Deletebranch" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -785,5 +807,31 @@
                     });
     </script>
 
+    <!--- delete bike -->
+    <script>
+        document.querySelectorAll('.bikeDeleteBtn').forEach(item => {
+                    item.addEventListener('click', function(event) {
+                        event.preventDefault();
+
+                        let name = this.getAttribute('data-name');
+                        console.log(name);
+                        document.getElementById("bname").innerText =name;
+                        var myModal = new bootstrap.Modal(document.getElementById("Deletebike"));
+                        myModal.show();
+                   });
+                });
+
+            <!-- deleting bike -->
+        document.querySelectorAll('.deleteingbikeBtn').forEach(item => {
+                                item.addEventListener('click', function(event) {
+                                    event.preventDefault();
+                    let name = document.getElementById("bname").innerText;
+
+                    if(name!==""){
+                                   axios.get('http://localhost:8095/project_main/deletebike?name='+name)
+                                   }
+                               });
+                            });
+    </script>
 </body>
 </html>
