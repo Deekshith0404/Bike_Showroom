@@ -86,7 +86,6 @@ public class OwnerServiceImpl implements OwnerService {
         String password=PasswordGenerator.generatePassword(8);
         loginEntity.setPassword(password);
         boolean result=EmailSender.emailSender(userRegisterDto.getEmail(),password);
-        System.out.println(result);
         loginEntity.setLogincount(-1);
 
         ownerRepo.saveloign(loginEntity);
