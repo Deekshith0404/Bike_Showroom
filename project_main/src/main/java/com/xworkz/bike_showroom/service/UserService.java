@@ -1,5 +1,6 @@
 package com.xworkz.bike_showroom.service;
 
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface UserService {
     void loginrest(String email);
 
     boolean setpassword(String email, String password);
+
+    UserReristerEntity getUserByEmail(String email);
 }

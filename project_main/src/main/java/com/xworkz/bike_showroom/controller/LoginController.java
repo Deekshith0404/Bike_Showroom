@@ -54,6 +54,7 @@ public class LoginController {
 
     @RequestMapping("/addbranch")
     public String addnewbranch(BranchDto branchDto, Model model) throws IOException {
+        System.out.println(branchDto.getPic());
         byte[] bytes = branchDto.getPic().getBytes();
         Path path = Paths.get("E:\\commons\\Branches\\" + branchDto.getName() + System.currentTimeMillis());
         String frontfile = path.getFileName().toString();
@@ -131,8 +132,19 @@ public class LoginController {
     }
 
     @RequestMapping("/register")
-    public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto) {
+    public String registration(Model model, UserRegisterDto userRegisterDto, FollowUpDto followUpDto) throws IOException {
         userRegisterDto.setUserStatus("Active");
+        String imagePath = "E:\\commons\\profile\\dummy-profile-pic.jpg";
+        byte[] bytes = Files.readAllBytes(Paths.get(imagePath));
+
+        Path path = Paths.get("E:\\commons\\profile\\" + userRegisterDto.getName() + System.currentTimeMillis());
+        Files.write(path, bytes);
+
+
+        String frontfile = path.getFileName().toString();
+        userRegisterDto.setProfile(frontfile);
+
+
         boolean result = ownerLogin.register(userRegisterDto);
         followUpDto.setDate(Date.valueOf(LocalDate.now()));
         followUpDto.setTime(Time.valueOf(LocalTime.now()));
@@ -316,5 +328,19 @@ public class LoginController {
             model.addAttribute("result","cannot delete");
         }
         return "dashboard";
+    }
+
+
+
+    @RequestMapping("/getprofile")
+    public void prfilePic(@RequestParam("email")String email,Model model,HttpServletResponse response) throws IOException {
+        UserReristerEntity userReristerEntity=userService.getUserByEmail(email);
+        response.setContentType("image/jpg");
+        File file=new File("E:\\commons\\profile\\"+userReristerEntity.getProfile());
+        InputStream in=new BufferedInputStream(new FileInputStream(file));
+        ServletOutputStream out = response.getOutputStream();
+        IOUtils.copy(in,out);
+        response.flushBuffer();
+
     }
 }

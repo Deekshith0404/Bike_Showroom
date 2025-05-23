@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.repository;
 
 import com.xworkz.bike_showroom.entity.LoginEntity;
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UserRepo {
     void loginrest(String email);
 
     boolean setpassword(String email, String password);
+
+    UserReristerEntity getUserByEmail(String email);
 }

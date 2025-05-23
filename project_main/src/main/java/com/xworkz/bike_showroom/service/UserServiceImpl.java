@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.service;
 
 import com.xworkz.bike_showroom.entity.LoginEntity;
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import com.xworkz.bike_showroom.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,6 +90,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean setpassword(String email, String password) {
         return userRepo.setpassword(email,password);
+    }
+
+    @Override
+    public UserReristerEntity getUserByEmail(String email) {
+        return userRepo.getUserByEmail(email);
     }
 }
 

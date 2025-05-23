@@ -63,6 +63,95 @@
             width: 100%;
         }
 
+        /* Profile Dropdown */
+        .profile-dropdown {
+            margin-left: 15px;
+        }
+
+        .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-img:hover {
+            border-color: var(--gold-dark);
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            background-color: var(--dark-gray);
+            border: 1px solid var(--gold);
+            border-radius: 5px;
+        }
+
+        .dropdown-item {
+            color: white;
+            padding: 8px 15px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        .dropdown-divider {
+            border-color: rgba(255,255,255,0.1);
+        }
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b38f2a;
+            --black: #121212;
+            --dark-gray: #1e1e1e;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--black);
+            min-height: 100vh;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--black) !important;
+            border-bottom: 1px solid var(--gold);
+            padding: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 600;
+            margin: 0 10px;
+            position: relative;
+            padding: 8px 0 !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
         /* Hero Section */
         .bikes-hero {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
@@ -546,43 +635,96 @@
             .bike-modal .image-container {
                 height: 300px;
             }
-        }
+            /* Gold Theme for Profile Modal */
+            .bg-gold {
+                background-color: var(--gold) !important;
+            }
+
+            .bg-light-gold {
+                background-color: rgba(212, 175, 55, 0.1) !important;
+                border: 1px solid rgba(212, 175, 55, 0.3) !important;
+            }
+
+            .text-gold {
+                color: var(--gold) !important;
+            }
+
+            .btn-gold {
+                background-color: var(--gold);
+                color: white;
+                border: none;
+                transition: all 0.3s;
+            }
+
+            .btn-gold:hover {
+                background-color: var(--gold-dark);
+                color: white;
+            }
+
+            .profile-modal .modal-content {
+                border: 2px solid var(--gold);
+                border-radius: 10px;
+            }
+
+            .profile-modal .modal-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .profile-modal .form-control {
+                padding: 0.75rem 1rem;
+                min-height: calc(1.5em + 1.5rem);
+                border-radius: 5px;
+            }
+
+            .profile-img {
+                transition: all 0.3s ease;
+            }
+
+            .profile-img:hover {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            }
+
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.jsp">
-                <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" style="height: 60px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.jsp">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="bikes.jsp">Models</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">location</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ownerLogin.jsp">Admin</a>
-                    </li>
-                </ul>
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="index.jsp">
+                    <img src="https://logos-world.net/wp-content/uploads/2022/12/Royal-Enfield-Logo.png" alt="Royal Enfield Logo" style="height: 60px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.jsp">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="bikes.jsp">Models</a>
+                        </li>
+
+
+                        <!-- Profile Dropdown -->
+                        <li class="nav-item profile-dropdown dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                   <img src="getprofile?email=${email}" alt="profile" class="profile-img">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><button class="dropdown-item" id="viewprofileBtn"><i class="fas fa-user-circle me-2"></i>My Profile</button></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="index.jsp"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+
+
+
 
     <!-- Bikes Hero Section -->
     <section class="bikes-hero">
@@ -694,6 +836,51 @@
         </div>
     </section>
 
+    <!-- view profile -->
+                <div class="modal fade" id="viewprofile" tabindex="-1" aria-labelledby="viewprofile" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-gold text-white">
+                                <h5 class="modal-title" id="viewprofile"><i class="fas fa-user-circle me-2"></i>Profile Information</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-4 d-flex flex-column align-items-center">
+                                        <img src="getprofile?email=${email}" alt="profile" class="profile-img img-fluid rounded-circle mb-3 shadow" style="width: 200px; height: 200px; object-fit: cover; border: 3px solid var(--gold);">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label fw-bold text-gold">Full Name</label>
+                                            <span class="form-control bg-light-gold" id="name"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label fw-bold text-gold">Email Address</label>
+                                            <span class="form-control bg-light-gold" id="email"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="dlnumber" class="form-label fw-bold text-gold">Driver License Number</label>
+                                            <span class="form-control bg-light-gold" id="dlnumber"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phonenumber" class="form-label fw-bold text-gold">Phone Number</label>
+                                            <span class="form-control bg-light-gold" id="phonenumber"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label fw-bold text-gold">Address</label>
+                                            <span class="form-control bg-light-gold" id="address"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-gold">Edit Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
     <!-- Footer -->
     <footer>
         <div class="container text-center">
@@ -804,6 +991,15 @@
                     dots[index].classList.add('active');
                 }
             }
+        </script>
+        <script>
+        document.getElementById("viewprofileBtn").addEventListener("click", function() {
+            event.preventDefault();
+            console.log("its comming here")
+            var myModal = new bootstrap.Modal(document.getElementById("viewprofile"));
+             myModal.show();
+        });
+
         </script>
 
 </body>

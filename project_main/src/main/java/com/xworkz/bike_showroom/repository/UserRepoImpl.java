@@ -1,6 +1,7 @@
 package com.xworkz.bike_showroom.repository;
 
 import com.xworkz.bike_showroom.entity.LoginEntity;
+import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -206,6 +207,21 @@ public class UserRepoImpl implements UserRepo{
             if (entityManager!=null){
                 entityManager.close();
             }
+        }
+    }
+
+    @Override
+    public UserReristerEntity getUserByEmail(String email) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("getbyemail");
+            query.setParameter("email",email);
+            UserReristerEntity entity=(UserReristerEntity) query.getSingleResult();
+            return entity;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
         }
     }
 }
