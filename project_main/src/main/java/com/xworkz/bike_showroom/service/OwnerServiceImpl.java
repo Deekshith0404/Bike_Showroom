@@ -163,6 +163,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public boolean deletebikeBymodel(String name) {
+
         return ownerRepo.deletebikebymodel(name);
     }
 

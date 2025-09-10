@@ -1,5 +1,7 @@
 package com.xworkz.bike_showroom.service;
 
+import com.xworkz.bike_showroom.dto.UserRegisterDto;
+import com.xworkz.bike_showroom.entity.LoginEntity;
 import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import org.springframework.ui.Model;
 
@@ -18,4 +20,8 @@ public interface UserService {
     boolean setpassword(String email, String password);
 
     UserReristerEntity getUserByEmail(String email);
+
+    Boolean updateUser(UserRegisterDto userRegisterDto);
+
+    LoginEntity getlogindatabyEmail(String email);
 }

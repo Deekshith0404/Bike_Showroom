@@ -22,4 +22,8 @@ public interface UserRepo {
     boolean setpassword(String email, String password);
 
     UserReristerEntity getUserByEmail(String email);
+
+    Boolean updateuser(UserReristerEntity userReristerEntity);
+
+    LoginEntity getlogindataByEmail(String email);
 }

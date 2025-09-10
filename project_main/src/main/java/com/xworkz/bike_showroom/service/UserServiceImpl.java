@@ -1,8 +1,10 @@
 package com.xworkz.bike_showroom.service;
 
+import com.xworkz.bike_showroom.dto.UserRegisterDto;
 import com.xworkz.bike_showroom.entity.LoginEntity;
 import com.xworkz.bike_showroom.entity.UserReristerEntity;
 import com.xworkz.bike_showroom.repository.UserRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ public class UserServiceImpl implements UserService{
     UserRepo userRepo;
     @Override
     public Long emailoccurence(String email) {
+
         return userRepo.emailoccurence(email);
     }
 
@@ -95,6 +98,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserReristerEntity getUserByEmail(String email) {
         return userRepo.getUserByEmail(email);
+    }
+
+    @Override
+    public Boolean updateUser(UserRegisterDto userRegisterDto) {
+        UserReristerEntity userReristerEntity=new UserReristerEntity();
+        BeanUtils.copyProperties(userRegisterDto,userReristerEntity);
+        return userRepo.updateuser(userReristerEntity);
+    }
+
+    @Override
+    public LoginEntity getlogindatabyEmail(String email) {
+        return userRepo.getlogindataByEmail(email);
     }
 }
 

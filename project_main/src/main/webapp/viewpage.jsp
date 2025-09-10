@@ -684,6 +684,10 @@
                 transform: scale(1.05);
                 box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
             }
+            .result{
+                color:red;
+            }
+
 
     </style>
 </head>
@@ -705,6 +709,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="bikes.jsp">Models</a>
                         </li>
+                        <input type="text" hidden value="${email}" id="getemail"/>
 
 
                         <!-- Profile Dropdown -->
@@ -731,6 +736,9 @@
         <div class="container">
             <h1>Our Motorcycles</h1>
             <p>Discover the perfect Royal Enfield for your riding style</p>
+        </div>
+        <div class="result">
+        ${result}
         </div>
     </section>
 
@@ -840,7 +848,7 @@
                 <div class="modal fade" id="viewprofile" tabindex="-1" aria-labelledby="viewprofile" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header bg-gold text-white">
+                            <div class="modal-header bg-black text-white" >
                                 <h5 class="modal-title" id="viewprofile"><i class="fas fa-user-circle me-2"></i>Profile Information</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
@@ -855,7 +863,7 @@
                                             <span class="form-control bg-light-gold" id="name"></span>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="email" class="form-label fw-bold text-gold">Email Address</label>
+                                            <label for="email" class="form-label fw-bold text-gold" >Email Address</label>
                                             <span class="form-control bg-light-gold" id="email"></span>
                                         </div>
                                         <div class="mb-3">
@@ -863,11 +871,11 @@
                                             <span class="form-control bg-light-gold" id="dlnumber"></span>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phonenumber" class="form-label fw-bold text-gold">Phone Number</label>
+                                            <label for="phonenumber" class="form-label fw-bold text-gold" >Phone Number</label>
                                             <span class="form-control bg-light-gold" id="phonenumber"></span>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="address" class="form-label fw-bold text-gold">Address</label>
+                                            <label for="address" class="form-label fw-bold text-gold" >Address</label>
                                             <span class="form-control bg-light-gold" id="address"></span>
                                         </div>
                                     </div>
@@ -875,7 +883,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-gold">Edit Profile</button>
+                                <a href="startupdateRegister?email=${email}"><button type="button" class="btn btn-gold">Edit Profile</button></a>
                             </div>
                         </div>
                     </div>
@@ -993,13 +1001,30 @@
             }
         </script>
         <script>
-        document.getElementById("viewprofileBtn").addEventListener("click", function() {
+        document.getElementById("viewprofileBtn").addEventListener("click", function(event) {
             event.preventDefault();
-            console.log("its comming here")
-            var myModal = new bootstrap.Modal(document.getElementById("viewprofile"));
-             myModal.show();
-        });
 
+            const email = document.getElementById("getemail").value;
+
+            fetch("http://localhost:8095/project_main/getuser?email=" + encodeURIComponent(email))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("name").innerHTML = data.name || "";
+                    document.getElementById("email").innerHTML = data.email || "";
+                    document.getElementById("phonenumber").innerHTML = data.phoneNumber || "";
+                    document.getElementById("dlnumber").innerHTML = data.dlNumber || "";
+                    document.getElementById("address").innerHTML = data.address || "";
+
+                    console.log("User Data Loaded:", data);
+
+                    var myModal = new bootstrap.Modal(document.getElementById("viewprofile"));
+                    myModal.show();
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    alert("Failed to fetch user data. Please try again.");
+                });
+        });
         </script>
 
 </body>

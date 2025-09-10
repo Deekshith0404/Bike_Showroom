@@ -11,10 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -84,7 +81,7 @@ public class LoginController {
         return "dashboard";
     }
 
-    //    byte[] bytes=regFormDto.getMultipartFile().getBytes();
+//        byte[] bytes=regFormDto.getMultipartFile().getBytes();
 //    Path path= Paths.get("E:\\commons\\"+regFormDto.getName() +System.currentTimeMillis());
 //        Files.write(path,bytes);
 //    String filename=path.getFileName().toString();
@@ -127,7 +124,7 @@ public class LoginController {
         } else {
             model.addAttribute("bikeresult", "Bike was not able to add");
         }
-        return this.dashboard(model);
+        return dashboard(model);
 
     }
 
@@ -136,7 +133,6 @@ public class LoginController {
         userRegisterDto.setUserStatus("Active");
         String imagePath = "E:\\commons\\profile\\dummy-profile-pic.jpg";
         byte[] bytes = Files.readAllBytes(Paths.get(imagePath));
-
         Path path = Paths.get("E:\\commons\\profile\\" + userRegisterDto.getName() + System.currentTimeMillis());
         Files.write(path, bytes);
 
@@ -180,11 +176,17 @@ public class LoginController {
         return "userRegister";
     }
 
+    @RequestMapping("/startupdateRegister")
+    public String startupdate(@RequestParam("email") String email, Model model){
+        model.addAttribute("user",userService.getUserByEmail(email));
+        model.addAttribute("branchdata", ownerLogin.branchnames());
+        return "updateUserReg";
+    }
+
     @RequestMapping("/followupedit")
     @ResponseBody
     public UserReristerEntity followupedit(@RequestParam("name") String name, Model model) {
         System.out.println("===========---------");
-        System.out.println(ownerLogin.getalluserbyname(name));
         return ownerLogin.getalluserbyname(name);
     }
 
@@ -341,6 +343,38 @@ public class LoginController {
         ServletOutputStream out = response.getOutputStream();
         IOUtils.copy(in,out);
         response.flushBuffer();
+    }
 
+    @RequestMapping("/getuser")
+    @ResponseBody
+    public UserReristerEntity getuserByEmail(@RequestParam("email")String email){
+        System.out.println("---------------------------");
+        System.out.println(userService.getUserByEmail(email));
+        return userService.getUserByEmail(email);
+
+
+    }
+
+    @PostMapping("updateregistrationForm")
+    public String updateuserdetails(UserRegisterDto userRegisterDto,Model model) throws IOException {
+
+        if(userRegisterDto.getProfilefile()!=null) {
+            byte[] bytes = userRegisterDto.getProfilefile().getBytes();
+            Path path = Paths.get("E:\\commons\\profile\\" + userRegisterDto.getName() + System.currentTimeMillis());
+            Files.write(path, bytes);
+            String frontfile = path.getFileName().toString();
+            userRegisterDto.setProfile(frontfile);
+        }
+        Boolean result=userService.updateUser(userRegisterDto);
+        System.out.println(result);
+        if (result){
+             model.addAttribute("result","update complete");
+             model.addAttribute("email",userRegisterDto.getEmail());
+             LoginEntity login=userService.getlogindatabyEmail(userRegisterDto.getEmail());
+             return this.userlogin(userRegisterDto.getEmail(),login.getPassword(),model);
+        }else {
+            model.addAttribute("result","failed to update try again");
+            return this.startupdate(userRegisterDto.getEmail(),model);
+        }
     }
 }

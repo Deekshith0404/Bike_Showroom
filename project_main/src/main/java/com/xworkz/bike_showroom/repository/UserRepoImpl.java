@@ -224,4 +224,51 @@ public class UserRepoImpl implements UserRepo{
             return null;
         }
     }
+
+    @Override
+    public Boolean updateuser(UserReristerEntity userReristerEntity) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            UserReristerEntity ent = entityManager.find(UserReristerEntity.class, userReristerEntity.getId());
+            if (ent != null) {
+                entityManager.getTransaction().begin();
+                if (userReristerEntity.getName()!=null) ent.setName(userReristerEntity.getName());
+                if (userReristerEntity.getProfile()!=null) ent.setProfile(userReristerEntity.getProfile());
+                if (userReristerEntity.getAge()!=null) ent.setAge(userReristerEntity.getAge());
+                if (userReristerEntity.getAddress()!=null) ent.setAddress(userReristerEntity.getAddress());
+                if (userReristerEntity.getDlNumber()!=null) ent.setDlNumber(userReristerEntity.getDlNumber());
+                if (userReristerEntity.getPhoneNumber()!=null) ent.setPhoneNumber(userReristerEntity.getPhoneNumber());
+                if (userReristerEntity.getShowroom()!=null) ent.setShowroom(userReristerEntity.getShowroom());
+                if (userReristerEntity.getBikeModel()!=null) ent.setBikeModel(userReristerEntity.getBikeModel());
+                entityManager.merge(ent);
+                entityManager.getTransaction().commit();
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            entityManager.getTransaction().rollback();
+            return false;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public LoginEntity getlogindataByEmail(String email) {
+        EntityManager entityManager= entityManagerFactory.createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Query query=entityManager.createNamedQuery("getuserdata");
+            query.setParameter("email",email);
+            LoginEntity entity=(LoginEntity) query.getSingleResult();
+            System.out.println(entity);
+            return entity;
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return null;
+        }
+    }
 }

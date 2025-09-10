@@ -210,22 +210,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Models</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ownerLogin.jsp">Admin</a>
+                        <a class="nav-link" href="index.jsp">Home</a>
                     </li>
                 </ul>
             </div>
@@ -239,15 +224,22 @@
                 <div class="col-lg-8">
                     <div class="card registration-card">
                         <div class="card-header text-center">
-                            <h2 class="card-title">Register With Us</h2>
+                            <h2 class="card-title">Update Details</h2>
                         </div>
                         <div class="card-body p-4">
-                            <form id="registrationForm" action="register" method="post" enctype="multipart/form-data">
+                            <form id="updateregistrationForm" action="updateregistrationForm" method="post"  enctype="multipart/form-data">
+
+                                 <input type="text" class="form-control" name="email" id="email" value="${user.email}" hidden required>
+                                 <input type="text" class="form-control" name="id" id="id" value="${user.id}" hidden required>
+                                <div class="row mb-3">
+                                         <label for="Profile pic" class="form-label">Profile</label>
+                                         <input type="file" class="form-control" name="profilefile" id="profilefile" required >
+                                </div>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <span id="nameerror" class="errormessage"></span><br>
                                         <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" class="form-control" id="name" onChange="onname()" name="name" placeholder="Enter your full name" required>
+                                        <input type="text" class="form-control" id="name" value="${user.name}" onChange="onname()" name="name" placeholder="Enter your full name" required>
                                     </div>
                                 </div>
 
@@ -255,39 +247,35 @@
                                  <span id="ageerror" class="errormessage"></span><br>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="age" class="form-label">Age</label>
-                                        <input type="number" class="form-control" onChange="onage()" id="age" name="age" placeholder="Enter your age" min="18" required>
+                                        <input type="number" class="form-control" onChange="onage()" value="${user.age}" id="age" name="age" placeholder="Enter your age" min="18" required>
                                     </div>
                                     <span id="dlnoerror" class="errormessage"></span><br>
                                     <div class="col-md-6">
                                         <label for="dlno" class="form-label">Driving License No.</label>
-                                        <input type="text" class="form-control" id="dlno" name="dlNumber" onChange="ondlno()" placeholder="Enter DL number" required>
+                                        <input type="text" class="form-control" id="dlno" value="${user.dlNumber}" name="dlNumber" onChange="ondlno()" placeholder="Enter DL number" required>
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <span id="addresserror" class="errormessage"></span><br>
                                     <label for="address" class="form-label">Address</label>
-                                    <textarea class="form-control" id="address" rows="2" onChange="onaddress()" name="address" placeholder="Enter your full address" required></textarea>
+                                    <textarea class="form-control" id="address" rows="2" onChange="onaddress()" name="address" value="${user.address}" placeholder="Enter your full address" required>${user.address}</textarea>
                                 </div>
 
                                 <div class="row mb-3">
                                         <span id="phoneerror" class="errormessage"></span><br>
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" onChange="onnumber()" id="phone" name="phoneNumber" placeholder="Enter phone number" required>
+                                        <input type="tel" class="form-control" onChange="onnumber()" value="${user.phoneNumber}" id="phone" name="phoneNumber" placeholder="Enter phone number" required>
                                     </div>
                                         <span id="emailerror" class="errormessage"></span><br>
-                                    <div class="col-md-6">
-                                        <label for="email" class="form-label">Email ID</label>
-                                        <input type="email" class="form-control" id="email" onChange="onemail()" name="email" placeholder="Enter email address" required>
-                                    </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-6 mb-3 mb-md-0">
                                         <label for="showroom" class="form-label">Preferred Showroom</label>
                                         <select class="form-select" id="showroom" name="showroom" onChange="fetchBikes()" required>
-                                             <option value="" selected disabled>-- Select Branch --</option>
+                                             <option value="${user.showroom}">${user.showroom}</option>
                                              <div class="dropdown">
                                                  <c:forEach items="${branchdata}" var="branch">
                                                       <option value="${branch}">${branch}</option>
@@ -298,59 +286,15 @@
                                     <div class="col-md-6">
                                         <label for="bike" class="form-label">Bike Model</label>
                                         <select class="form-select" id="bike" name="bikeModel" required>
-                                             <option value="" selected disabled>Select your bike</option>
+                                             <option value="${user.bikeModel}">${user.bikeModel}</option>
                                              <div class="dropdown">
                                              <option></option>
                                              </div>
                                           </select>
                                     </div>
                                 </div>
-
-                                <div class="mb-4">
-                                    <label class="form-label">Schedule or Book a Ride</label>
-                                    <div class="d-flex flex-wrap">
-                                        <div class="form-check me-4">
-                                            <input class="form-check-input" type="radio" name="rideOption" id="schedule" value="schedule" checked>
-                                            <label class="form-check-label" for="schedule">
-                                                Schedule Test Ride
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="rideOption" id="bookNow" value="bookNow">
-                                            <label class="form-check-label" for="bookNow">
-                                                Book Ride Now
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Ride Schedule Options (hidden by default) -->
-                                    <div id="rideScheduleOptions" class="ride-schedule-options show">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="rideDate" class="form-label">Select Date</label>
-                                                <input type="date" class="form-control" id="rideDate" name="rideDate" min="">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="rideTime" class="form-label">Select Time Slot</label>
-                                                <select class="form-select" id="rideTime" name="rideTime">
-                                                    <option value="" selected disabled>Choose time slot</option>
-                                                    <div class="dropdown">
-                                                    <option>09:00 AM - 10:00 AM</option>
-                                                    <option>10:00 AM - 11:00 AM</option>
-                                                    <option>11:00 AM - 12:00 PM</option>
-                                                    <option>12:00 PM - 01:00 PM</option>
-                                                    <option>02:00 PM - 03:00 PM</option>
-                                                    <option>03:00 PM - 04:00 PM</option>
-                                                    <option>04:00 PM - 05:00 PM</option>
-                                                    </div>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="d-grid">
-                                    <input type="submit" class="btn btn-register" value="Register"/>
+                                    <input type="submit" class="btn btn-register" value="UPDATE"/>
                                 </div>
                             </form>
                         </div>
@@ -481,23 +425,6 @@
                    }
             }else{
                 document.getElementById('phoneerror').innerHTML="invalid number pattern and size must be 10";
-            }
-        }
-
-        function onemail() {
-            var email=document.getElementById('email')
-            var emailvalue=email.value;
-            console.log(name)
-            console.log(emailvalue)
-
-            if (emailvalue!=="") {
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("GET","http://localhost:8095/project_main/emailval?email="+emailvalue);
-                xhttp.send();
-
-                xhttp.onload = function(){
-                    document.getElementById("emailerror").innerHTML = this.responseText;
-                }
             }
         }
 

@@ -15,7 +15,6 @@ public class UserRegistrationRestController {
     @Autowired
     UserService userService;
 
-
     @GetMapping(value = "/emailval")
     public String onEmail(@RequestParam("email") String email ){
         System.out.println("invoking in the onEmail............");
